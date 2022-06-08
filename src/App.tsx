@@ -1,5 +1,3 @@
-import Login from "./pages/login";
+import { Routes } from "./routes";
 
-export const App = () => (
-    <Login />
-);
+export const App = () => <Routes />

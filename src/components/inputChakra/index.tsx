@@ -60,17 +60,18 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
   }, [error, value]);
 
   return (
-    <FormControl isInvalid={!!error} fontFamily="Ubuntu">
+    <FormControl isInvalid={!!error} fontFamily="Ubuntu" w="100%">
       {!!label && (
         <FormLabel color="black.400" fontSize="18px" ml="18px">
           {label}
         </FormLabel>
       )}
 
-      <InputGroup>
+      <InputGroup display="flex" flexDirection="column" mb="0">
         <ChakraInput
           id={name}
           name={name}
+          w="100%"
           onChangeCapture={(e) => setValue(e.currentTarget.value)}
           onBlurCapture={handleInputBlur}
           onFocus={handleInputFocus}
@@ -92,6 +93,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           <InputRightElement
             color={inputVariation[variation]}
             display="flex"
+            flexDirection="column"
             alignItems="center"
             justifyContent="center"
             h="60px"

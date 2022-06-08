@@ -70,6 +70,7 @@ const Login = () => {
               fontSize="20px"
               letterSpacing="0.8px"
               _hover={{ bg: "purple.600" }}
+              _active={{ bg: "purple.500" }}
             >
               Entrar
             </Button>

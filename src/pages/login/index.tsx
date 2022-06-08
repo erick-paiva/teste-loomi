@@ -15,7 +15,13 @@ const Login = () => {
       <Center h="100%" w="894px" bg="white">
         <Center flexDirection="column">
           <Img src={LogoLoomi} alt="logoLoomi" />
-          <Heading as="h3" size="xl">
+          <Heading
+            as="h3"
+            fontFamily="Nunito Sans"
+            fontSize="24px"
+            fontWeight="600"
+            margin="40px 0 65px"
+          >
             Entrar na plataforma
           </Heading>
         </Center>

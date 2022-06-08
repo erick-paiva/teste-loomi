@@ -5,10 +5,9 @@ import {
   FormLabel,
   Input as ChakraInput,
   InputProps as ChakraInputProps,
-  InputLeftElement,
   InputGroup,
+  InputRightElement,
 } from "@chakra-ui/react";
-import { IconType } from "react-icons/lib";
 import {
   useState,
   useCallback,
@@ -21,7 +20,7 @@ interface InputProps extends ChakraInputProps {
   name: string;
   label?: string;
   error?: FieldError | null;
-  icon?: IconType;
+  Icon?: JSX.Element;
 }
 
 type inputVariationOptions = {
@@ -31,12 +30,12 @@ type inputVariationOptions = {
 const inputVariation: inputVariationOptions = {
   error: "red.500",
   default: "gray.200",
-  focus: "purple.800",
-  filled: "green.500",
+  focus: "gray.600",
+  filled: "green.200",
 };
 
 const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
-  { name, label, icon: Icon, error = null, ...rest },
+  { name, label, Icon, error = null, ...rest },
   ref
 ) => {
   const [value, setValue] = useState("");
@@ -61,36 +60,46 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
   }, [error, value]);
 
   return (
-    <FormControl isInvalid={!!error}>
-      {!!label && <FormLabel color="gray.400">{label}</FormLabel>}
+    <FormControl isInvalid={!!error} fontFamily="Ubuntu">
+      {!!label && (
+        <FormLabel color="black.400" fontSize="18px" ml="18px">
+          {label}
+        </FormLabel>
+      )}
 
-      <InputGroup flexDirection="column">
-        {Icon && (
-          <InputLeftElement color={inputVariation[variation]} mt="2.5">
-            <Icon />
-          </InputLeftElement>
-        )}
-
+      <InputGroup>
         <ChakraInput
           id={name}
           name={name}
           onChangeCapture={(e) => setValue(e.currentTarget.value)}
           onBlurCapture={handleInputBlur}
           onFocus={handleInputFocus}
-          borderColor={inputVariation[variation]}
           color={inputVariation[variation]}
           bg="gray.50"
           variant="outline"
           _hover={{ bgColor: "gray.100" }}
-          _placeholder={{ color: "gray.300" }}
+          _placeholder={{ color: "gray.600" }}
           _focus={{
             bg: "gray.100",
           }}
-          size="lg"
+          fontSize="20px"
           h="60px"
+          borderRadius="8px"
           ref={ref}
           {...rest}
         />
+        {Icon && (
+          <InputRightElement
+            color={inputVariation[variation]}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            h="60px"
+            mr="12px"
+          >
+            {Icon}
+          </InputRightElement>
+        )}
 
         {!!error && (
           <FormErrorMessage color="red.500">{error.message}</FormErrorMessage>

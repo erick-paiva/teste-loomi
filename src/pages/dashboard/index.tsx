@@ -2,6 +2,7 @@ import { Flex } from "@chakra-ui/react";
 import Header from "../../components/header";
 import BackgroundImage from "../../assets/imagesPage/backgroundImage.svg";
 import LogoLoomi from "../../assets/imagesPage/logoLoomi.svg";
+import Sidebar from "../../components/sidebar";
 
 
 const Dashboard = () => {
@@ -14,8 +15,13 @@ const Dashboard = () => {
       backgroundPosition="center"
       backgroundSize="cover"
       bgColor="purple.50"
+      flexDirection="column"
     >
       <Header userName="eduardo"/>
+
+
+      <Sidebar />
+
     </Flex>
   );
 };

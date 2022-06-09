@@ -52,7 +52,7 @@ const Sidebar = () => {
               color="gray.600"
               letterSpacing="0.44px"
             >
-              Voltar
+              Fechar
             </Text>
           </Center>
         ) : (

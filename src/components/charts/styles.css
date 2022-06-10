@@ -1,0 +1,11 @@
+#chart .apexcharts-tooltip {
+    transform: translateX(10px) translateY(10px);
+    overflow: visible !important;
+    white-space: normal !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+#chart .apexcharts-tooltip span {
+    display: inline-block;
+}

@@ -22,7 +22,7 @@ const Sidebar = () => {
     <Center
       bg="white"
       margin="16px 0 0 16px"
-      h="100%"
+      minH="90%"
       w={open ? "276px" : "88px"}
       flexDirection="column"
       boxShadow="0px 3px 6px #00000029;"

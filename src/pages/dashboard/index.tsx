@@ -3,6 +3,8 @@ import Header from "../../components/header";
 import BackgroundImage from "../../assets/imagesPage/backgroundImage.svg";
 import Sidebar from "../../components/sidebar";
 import StartCard from "../../components/startCard";
+import ChartOrdersMonth from "../../components/charts";
+import { braidsByAge, orderPerMonth } from "./chatsOptions";
 
 const Dashboard = () => {
   const data = [
@@ -57,29 +59,109 @@ const Dashboard = () => {
       flexDirection="column"
     >
       <Header userName="eduardo" />
-
-      <Flex as="section" alignItems="flex-start">
+      <Flex w="100%"
+        overflowX="hidden"
+      >
         <Sidebar />
-        <Box margin="40px 0 0 40px" minW="80%" mr="40px">
-          <Heading
-            as="h3"
-            color="gray.600"
-            letterSpacing="0.56px"
-            fontSize="28px"
-            fontWeight="bold"
-            mb="32px"
-            ml="40px"
-          >
-            Início
-          </Heading>
-          <HStack overflowX="auto" spacing="32px" minH="200px">
-            {data.map((item) => (
-              <Box key={item.title} minW="232px">
-                <StartCard information={item} />
-              </Box>
-            ))}
-          </HStack>
-        </Box>
+        <Flex
+          minH="70%"
+          w="100%"
+          as="section"
+          alignItems="flex-start"
+          overflowY="auto"
+        >
+          <Box minW="70%" minH="70%">
+            <Box margin="40px 0 0 40px" minW="80%" mr="40px">
+              <Heading
+                as="h3"
+                color="gray.600"
+                letterSpacing="0.56px"
+                fontSize="28px"
+                fontWeight="bold"
+                mb="32px"
+                ml="40px"
+              >
+                Início
+              </Heading>
+              <HStack overflowX="auto" spacing="32px" minH="200px">
+                {data.map((item, i) => (
+                  <Box key={item.title + i} minW="232px">
+                    <StartCard information={item} />
+                  </Box>
+                ))}
+              </HStack>
+            </Box>
+            <Box margin="40px 0 0 40px" minW="80%" mr="40px">
+              <Heading
+                as="h3"
+                color="purple.500"
+                letterSpacing="0.48px"
+                fontSize="24px"
+                fontWeight="bold"
+                mb="32px"
+                ml="40px"
+              >
+                Dashboard de vendas
+              </Heading>
+              <HStack overflowX="auto" spacing="32px" minH="200px">
+                <Box bg="white" borderRadius="12px">
+                  <ChartOrdersMonth
+                    data={orderPerMonth}
+                  />
+                </Box>
+              </HStack>
+            </Box>
+            <Box margin="40px 0 0 40px" minW="80%" mr="40px">
+              <Heading
+                as="h3"
+                color="purple.500"
+                letterSpacing="0.48px"
+                fontSize="24px"
+                fontWeight="bold"
+                mb="32px"
+                ml="40px"
+              >
+                Funil de conversão
+              </Heading>
+              <HStack overflowX="auto" spacing="32px" minH="200px">
+                {data.map((item, i) => (
+                  <Box key={item.title + i + 1} minW="232px">
+                    <StartCard information={item} />
+                  </Box>
+                ))}
+              </HStack>
+            </Box>
+
+            <Box margin="40px 0 0 40px" minW="80%" mr="40px">
+              <Heading
+                as="h3"
+                color="purple.500"
+                letterSpacing="0.48px"
+                fontSize="24px"
+                fontWeight="bold"
+                mb="32px"
+                ml="40px"
+              >
+                Perfil do usuário
+              </Heading>
+              <HStack overflowX="auto" spacing="32px" minH="200px">
+                <Box bg="white" borderRadius="12px">
+                  <ChartOrdersMonth
+                    data={braidsByAge}
+                    showSelect={false}
+                  />
+                </Box>
+
+                <Box bg="white" borderRadius="12px">
+                  <ChartOrdersMonth
+                    data={braidsByAge}
+                    showSelect={false}
+                  />
+                </Box>
+              </HStack>
+            </Box>
+          </Box>
+        </Flex>
       </Flex>
     </Flex>
   );

@@ -1,23 +1,26 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Box} from "@chakra-ui/react";
+import { memo } from "react";
 import ReactApexChart from "react-apexcharts";
 import SelectStart from "./select";
 import "./styles.css";
-
 interface Props {
   data: {
-    options?: any;
-    series?: any;
+    options?: object;
+    series?: ApexAxisChartSeries;
     type?: string;
     height?: number | string;
     width?: number | string;
   };
   showSelect?: boolean;
+  stylize?: boolean;
 }
 
 const ChartOrdersMonth: React.FC<Props> = ({
   data,
   showSelect = true,
+  stylize = false,
 }: Props) => {
+
   const {
     options,
     series,
@@ -34,7 +37,7 @@ const ChartOrdersMonth: React.FC<Props> = ({
         series={series}
         height={height}
         width={width}
-        id="chart"
+        {...(stylize && {id: "chart"})}
       />
       {showSelect && (
         <SelectStart
@@ -67,4 +70,4 @@ const ChartOrdersMonth: React.FC<Props> = ({
     </Box>
   );
 };
-export default ChartOrdersMonth;
+export default memo(ChartOrdersMonth);

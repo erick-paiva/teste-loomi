@@ -4,7 +4,14 @@ import BackgroundImage from "../../assets/imagesPage/backgroundImage.svg";
 import Sidebar from "../../components/sidebar";
 import StartCard from "../../components/startCard";
 import ChartOrdersMonth from "../../components/charts";
-import { braidsByAge, orderPerMonth } from "./chatsOptions";
+import { profitExpectation } from "./chartOptions/profitExpectation";
+import { orderPerMonth } from "./chartOptions/orderPerMonth";
+import { braidsByAge } from "./chartOptions/braidsByAge";
+import { ordersMade } from "./chartOptions/ordersMade";
+import { categoriesOrders } from "./chartOptions/categoriesOrders";
+import { sessionsByGenre } from "./chartOptions/sessionsByGenre";
+import { transactionByCustomerType } from "./chartOptions/transactionByCustomerType";
+import { transactionByDevice } from "./chartOptions/transactionByDevice";
 
 const Dashboard = () => {
   const data = [
@@ -59,10 +66,10 @@ const Dashboard = () => {
       flexDirection="column"
     >
       <Header userName="eduardo" />
-      <Flex w="100%"
-        overflowX="hidden"
-      >
-        <Sidebar />
+      <Flex w="100%" overflowX="hidden">
+        <Box minW="40px" mr="20px">
+          <Sidebar />
+        </Box>
         <Flex
           minH="70%"
           w="100%"
@@ -70,8 +77,8 @@ const Dashboard = () => {
           alignItems="flex-start"
           overflowY="auto"
         >
-          <Box minW="70%" minH="70%">
-            <Box margin="40px 0 0 40px" minW="80%" mr="40px">
+          <Box minW="70%" minH="70%" ml="20px">
+            <Box margin="40px 40px 40px 0" minW="80%">
               <Heading
                 as="h3"
                 color="gray.600"
@@ -91,7 +98,7 @@ const Dashboard = () => {
                 ))}
               </HStack>
             </Box>
-            <Box margin="40px 0 0 40px" minW="80%" mr="40px">
+            <Box mb="40px" minW="80%" mr="40px">
               <Heading
                 as="h3"
                 color="purple.500"
@@ -105,13 +112,30 @@ const Dashboard = () => {
               </Heading>
               <HStack overflowX="auto" spacing="32px" minH="200px">
                 <Box bg="white" borderRadius="12px">
+                  <ChartOrdersMonth data={orderPerMonth()} />
+                </Box>
+                <Box bg="white" borderRadius="12px">
                   <ChartOrdersMonth
-                    data={orderPerMonth}
+                    data={profitExpectation()}
+                    // stylize={true}
+                  />
+                </Box>
+                <Box bg="white" borderRadius="12px">
+                  <ChartOrdersMonth
+                    data={ordersMade()}
+                    // stylize={true}
+                  />
+                </Box>
+                <Box bg="white" borderRadius="12px">
+                  <ChartOrdersMonth
+                    data={categoriesOrders()}
+                    showSelect={false}
+                    stylize={true}
                   />
                 </Box>
               </HStack>
             </Box>
-            <Box margin="40px 0 0 40px" minW="80%" mr="40px">
+            <Box mb="40px" minW="80%" mr="40px">
               <Heading
                 as="h3"
                 color="purple.500"
@@ -132,7 +156,7 @@ const Dashboard = () => {
               </HStack>
             </Box>
 
-            <Box margin="40px 0 0 40px" minW="80%" mr="40px">
+            <Box mb="40px" minW="80%" mr="40px">
               <Heading
                 as="h3"
                 color="purple.500"
@@ -147,15 +171,31 @@ const Dashboard = () => {
               <HStack overflowX="auto" spacing="32px" minH="200px">
                 <Box bg="white" borderRadius="12px">
                   <ChartOrdersMonth
-                    data={braidsByAge}
+                    data={braidsByAge()}
                     showSelect={false}
+                    stylize={true}
                   />
                 </Box>
 
                 <Box bg="white" borderRadius="12px">
                   <ChartOrdersMonth
-                    data={braidsByAge}
+                    data={sessionsByGenre()}
                     showSelect={false}
+                    stylize={true}
+                  />
+                </Box>
+                <Box bg="white" borderRadius="12px">
+                  <ChartOrdersMonth
+                    data={transactionByCustomerType()}
+                    showSelect={false}
+                    stylize={true}
+                  />
+                </Box>
+                <Box bg="white" borderRadius="12px">
+                  <ChartOrdersMonth
+                    data={transactionByDevice()}
+                    showSelect={false}
+                    stylize={true}
                   />
                 </Box>
               </HStack>

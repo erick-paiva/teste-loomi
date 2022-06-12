@@ -2,7 +2,6 @@
     background: white;
     box-shadow: 0px 0px 20px #50459E33;
     border-radius: 6px;
-
     opacity: 1;
     display: flex;
     justify-content: center;
@@ -13,6 +12,7 @@
     opacity: 1;
     min-width: 117px;
     min-height: 42px;
+    flex-direction: row;
 }
 
 .arrow_box .text {

@@ -3,7 +3,7 @@ import Header from "../../components/header";
 import BackgroundImage from "../../assets/imagesPage/backgroundImage.svg";
 import Sidebar from "../../components/sidebar";
 import StartCard from "../../components/startCard";
-import ChartOrdersMonth from "../../components/charts";
+import Chart from "../../components/charts";
 import { profitExpectation } from "./chartOptions/profitExpectation";
 import { orderPerMonth } from "./chartOptions/orderPerMonth";
 import { braidsByAge } from "./chartOptions/braidsByAge";
@@ -112,22 +112,22 @@ const Dashboard = () => {
               </Heading>
               <HStack overflowX="auto" spacing="32px" minH="200px">
                 <Box bg="white" borderRadius="12px">
-                  <ChartOrdersMonth data={orderPerMonth()} />
+                  <Chart data={orderPerMonth()} />
                 </Box>
                 <Box bg="white" borderRadius="12px">
-                  <ChartOrdersMonth
+                  <Chart
                     data={profitExpectation()}
                     // stylize={true}
                   />
                 </Box>
                 <Box bg="white" borderRadius="12px">
-                  <ChartOrdersMonth
+                  <Chart
                     data={ordersMade()}
                     // stylize={true}
                   />
                 </Box>
                 <Box bg="white" borderRadius="12px">
-                  <ChartOrdersMonth
+                  <Chart
                     data={categoriesOrders()}
                     showSelect={false}
                     stylize={true}
@@ -170,7 +170,7 @@ const Dashboard = () => {
               </Heading>
               <HStack overflowX="auto" spacing="32px" minH="200px">
                 <Box bg="white" borderRadius="12px">
-                  <ChartOrdersMonth
+                  <Chart
                     data={braidsByAge()}
                     showSelect={false}
                     stylize={true}
@@ -178,21 +178,21 @@ const Dashboard = () => {
                 </Box>
 
                 <Box bg="white" borderRadius="12px">
-                  <ChartOrdersMonth
+                  <Chart
                     data={sessionsByGenre()}
                     showSelect={false}
                     stylize={true}
                   />
                 </Box>
                 <Box bg="white" borderRadius="12px">
-                  <ChartOrdersMonth
+                  <Chart
                     data={transactionByCustomerType()}
                     showSelect={false}
                     stylize={true}
                   />
                 </Box>
                 <Box bg="white" borderRadius="12px">
-                  <ChartOrdersMonth
+                  <Chart
                     data={transactionByDevice()}
                     showSelect={false}
                     stylize={true}

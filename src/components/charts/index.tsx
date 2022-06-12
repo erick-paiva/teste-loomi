@@ -1,12 +1,12 @@
 import { Box} from "@chakra-ui/react";
-import { memo, useEffect, useState } from "react";
+import { memo } from "react";
 import ReactApexChart from "react-apexcharts";
 import SelectStart from "./select";
 import "./styles.css";
 interface Props {
   data: {
-    options?: any;
-    series?: any;
+    options?: object;
+    series?: ApexAxisChartSeries;
     type?: string;
     height?: number | string;
     width?: number | string;

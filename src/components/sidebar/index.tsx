@@ -24,6 +24,7 @@ const Sidebar = () => {
       margin="16px"
       minH="90%"
       w={open ? "276px" : "88px"}
+      {...(open && { marginRight: "40px" })}
       flexDirection="column"
       boxShadow="0px 3px 6px #00000029;"
       opacity={1}
@@ -42,9 +43,7 @@ const Sidebar = () => {
         {...(open && { justifyContent: "flex-start" })}
       >
         {open ? (
-          <Center ml="30px"
-          animation={`${animation} 0.4s ease-in-out`}
-          >
+          <Center ml="30px" animation={`${animation} 0.4s ease-in-out`}>
             <HiOutlineArrowLeft size="25px" />
             <Text
               ml="33px"

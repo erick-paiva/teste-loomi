@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, HStack } from "@chakra-ui/react";
+import { Box, Flex, Heading, HStack, keyframes } from "@chakra-ui/react";
 import Header from "../../components/header";
 import BackgroundImage from "../../assets/imagesPage/backgroundImage.svg";
 import Sidebar from "../../components/sidebar";
@@ -12,8 +12,30 @@ import { categoriesOrders } from "./chartOptions/categoriesOrders";
 import { sessionsByGenre } from "./chartOptions/sessionsByGenre";
 import { transactionByCustomerType } from "./chartOptions/transactionByCustomerType";
 import { transactionByDevice } from "./chartOptions/transactionByDevice";
+import { useEffect, useState } from "react";
 
 const Dashboard = () => {
+  const [loading, setLoading] = useState(true);
+
+  const scrollBarStyle = {
+    "&::-webkit-scrollbar": {
+      width: "15px",
+      height: "13px",
+    },
+    "&::-webkit-scrollbar-track": {
+      width: "6px",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      background: "#5A4CA7",
+      borderRadius: "10px",
+    },
+  };
+
+  const animation = keyframes`
+  from {opacity: 0;}
+  to {opacity: 1;}
+`;
+
   const data = [
     {
       title: "Ticket médio últimas 24h",
@@ -54,6 +76,12 @@ const Dashboard = () => {
     },
   ];
 
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, [loading]);
+
   return (
     <Flex
       h="100vh"
@@ -64,9 +92,10 @@ const Dashboard = () => {
       backgroundSize="cover"
       bgColor="purple.50"
       flexDirection="column"
+      animation={`${animation} 1s ease-in-out`}
     >
       <Header userName="eduardo" />
-      <Flex w="100%" overflowX="hidden">
+      <Flex w="100%" overflowX="hidden" css={scrollBarStyle}>
         <Box minW="40px" mr="20px">
           <Sidebar />
         </Box>
@@ -76,6 +105,7 @@ const Dashboard = () => {
           as="section"
           alignItems="flex-start"
           overflowY="auto"
+          css={scrollBarStyle}
         >
           <Box minW="70%" minH="70%" ml="20px">
             <Box margin="40px 40px 40px 0" minW="80%">
@@ -90,7 +120,12 @@ const Dashboard = () => {
               >
                 Início
               </Heading>
-              <HStack overflowX="auto" spacing="32px" minH="200px">
+              <HStack
+                overflowX="auto"
+                css={scrollBarStyle}
+                spacing="32px"
+                minH="200px"
+              >
                 {data.map((item, i) => (
                   <Box key={item.title + i} minW="232px">
                     <StartCard information={item} />
@@ -110,21 +145,20 @@ const Dashboard = () => {
               >
                 Dashboard de vendas
               </Heading>
-              <HStack overflowX="auto" spacing="32px" minH="200px">
+              <HStack
+                overflowX="auto"
+                css={scrollBarStyle}
+                spacing="32px"
+                minH="200px"
+              >
                 <Box bg="white" borderRadius="12px">
                   <Chart data={orderPerMonth()} />
                 </Box>
                 <Box bg="white" borderRadius="12px">
-                  <Chart
-                    data={profitExpectation()}
-                    // stylize={true}
-                  />
+                  <Chart data={profitExpectation()} />
                 </Box>
                 <Box bg="white" borderRadius="12px">
-                  <Chart
-                    data={ordersMade()}
-                    // stylize={true}
-                  />
+                  <Chart data={ordersMade()} />
                 </Box>
                 <Box bg="white" borderRadius="12px">
                   <Chart
@@ -147,7 +181,12 @@ const Dashboard = () => {
               >
                 Funil de conversão
               </Heading>
-              <HStack overflowX="auto" spacing="32px" minH="200px">
+              <HStack
+                overflowX="auto"
+                css={scrollBarStyle}
+                spacing="32px"
+                minH="200px"
+              >
                 {data.map((item, i) => (
                   <Box key={item.title + i + 1} minW="232px">
                     <StartCard information={item} />
@@ -156,7 +195,7 @@ const Dashboard = () => {
               </HStack>
             </Box>
 
-            <Box mb="40px" minW="80%" mr="40px">
+            <Box mb="40px" minW="80%" mr="40px" css={scrollBarStyle}>
               <Heading
                 as="h3"
                 color="purple.500"
@@ -168,7 +207,12 @@ const Dashboard = () => {
               >
                 Perfil do usuário
               </Heading>
-              <HStack overflowX="auto" spacing="32px" minH="200px">
+              <HStack
+                overflowX="auto"
+                css={scrollBarStyle}
+                spacing="32px"
+                minH="200px"
+              >
                 <Box bg="white" borderRadius="12px">
                   <Chart
                     data={braidsByAge()}

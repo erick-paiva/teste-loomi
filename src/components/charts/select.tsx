@@ -1,12 +1,11 @@
 import { Select } from "@chakra-ui/react";
 
-interface IProps {
+interface ISelectProps {
   options: string[];
   placeholder?: string;
-  rest?: any;
 }
 
-const SelectStart = ({ options, placeholder, ...rest }: any) => {
+const SelectStart = ({ options, placeholder, ...rest }: ISelectProps | any) => {
   return (
     <Select placeholder={placeholder} {...rest}>
       {options.map((option: string) => (

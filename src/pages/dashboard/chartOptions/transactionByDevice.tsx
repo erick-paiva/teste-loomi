@@ -1,4 +1,5 @@
-import "./chartStyles/transactionByCustomerType.styles.css";
+import Charts from "../../../components/charts";
+import "./chartStyles/transactionByDevices.styles.css";
 
 interface IDonutChartProps {
   series: string[];
@@ -7,14 +8,10 @@ interface IDonutChartProps {
   w: object | any;
 }
 
-export const transactionByDevice = (series?: object): any => {
-  const customTooltip = ({
-    // dataPointIndex,
-    seriesIndex,
-    w,
-  }: IDonutChartProps) => {
+export const TransactionByDevice = () => {
+  const customTooltip = ({ seriesIndex, w }: IDonutChartProps) => {
     const series = w.config.series;
-    let transaction: number | string =
+    const transaction: number | string =
       +series[seriesIndex] >= 1000
         ? (+series[seriesIndex] / 1000).toFixed(3)
         : series[seriesIndex];
@@ -29,8 +26,8 @@ export const transactionByDevice = (series?: object): any => {
     ).toFixed(2);
 
     return `
-    <div id="container">
-      <span id="arrow"></span>
+    <div id="container-device">
+      <span id="arrow-device"></span>
       <div class="arrow_box-container">
         <div class="arrow_box-info">
           ${percent}
@@ -49,7 +46,7 @@ export const transactionByDevice = (series?: object): any => {
         `;
   };
 
-  const data = {
+  const options: object = {
     type: "donut",
     height: "400px",
     width: "539px",
@@ -108,5 +105,5 @@ export const transactionByDevice = (series?: object): any => {
     series: [2861, 1600],
   };
 
-  return data;
+  return <Charts data={options} showSelect={false} stylize={true} />;
 };

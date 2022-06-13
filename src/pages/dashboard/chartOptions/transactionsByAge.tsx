@@ -1,4 +1,6 @@
-import "./chartStyles/braids.styles.css";
+import { useEffect, useState } from "react";
+import Charts from "../../../components/charts";
+import "./chartStyles/transactionsByAge.styles.css";
 
 interface IBarChartProps {
   series: string[];
@@ -6,14 +8,57 @@ interface IBarChartProps {
   dataPointIndex: number;
   w: object | any;
 }
+interface IResponse {
+  category: string;
+  value: number;
+}
 
-export const braidsByAge = (series?: object): any => {
+interface Props {
+  data: {
+    [key: string]: number[] | IResponse[] | any;
+  };
+}
+
+export const TransactionsByAge = ({ data }: Props) => {
+  const mockSeries = [
+    {
+      name: "transações",
+      data: [0, 600, 2000, 700, 3000, 2700, 2600],
+    },
+  ];
+
+  const [series, setSeries] = useState(mockSeries);
+  const [categoryes, setCategoryes] = useState<string[]>([
+    "-18",
+    "18-24",
+    "25-34",
+    "35-44",
+    "45-54",
+    "55-64",
+    "65+",
+  ]);
+
+  useEffect(() => {
+    try {
+      const values: IResponse[] = Object.values(data["transactions-per-age"]);
+      setSeries([
+        {
+          name: "transações",
+          data: values.map((item) => item.value),
+        },
+      ]);
+
+      setCategoryes(values.map((item) => item.category));
+    } catch (error) {
+      setSeries(mockSeries);
+    }
+  }, [data]);
+
   const customTooltip = ({
     series,
     seriesIndex,
     dataPointIndex,
-  }:
-  IBarChartProps) => {
+  }: IBarChartProps) => {
     let value: number = +series[seriesIndex][dataPointIndex];
     let current: string | number = value;
     let extension = "";
@@ -27,9 +72,9 @@ export const braidsByAge = (series?: object): any => {
     }
 
     return `
-    <div id="container">
-      <span id="arrow"></span>
-      <div class="arrow_box">
+    <div id="container-transactions">
+      <span id="arrow-transactions"></span>
+      <div class="arrow_box-transactions">
         ${current}
         ${extension}
       </div>
@@ -37,7 +82,7 @@ export const braidsByAge = (series?: object): any => {
         `;
   };
 
-  const data = {
+  const options = {
     type: "bar",
     height: "400px",
     width: "715px",
@@ -97,7 +142,7 @@ export const braidsByAge = (series?: object): any => {
         },
       },
       xaxis: {
-        categories: ["-18", "18-24", "25-34", "35-44", "45-54", "55-64", "65+"],
+        categories: categoryes,
         labels: {
           style: {
             colors: "#4D4141",
@@ -144,13 +189,8 @@ export const braidsByAge = (series?: object): any => {
         custom: customTooltip,
       },
     },
-    series: [
-      {
-        name: "transações",
-        data: [0, 600, 2000, 700, 3000, 2700, 2600],
-      },
-    ],
+    series: series,
   };
 
-  return data;
+  return <Charts data={options} showSelect={false} stylize={true} />;
 };

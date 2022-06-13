@@ -15,7 +15,6 @@
 
 .arrow_box-info{
     font-size: 20px;
-    /* margin-left: 10px; */
     font-weight: bold;
 }
 
@@ -26,13 +25,13 @@
     margin-left: 10px;
 }
 
-#container-customer {
+#container-device {
     display: flex;
     align-items: flex-start;
     background: transparent;
 }
 
-#arrow-customer {
+#arrow-device {
     margin-top: 12px;
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
     transform: rotate(-90deg);

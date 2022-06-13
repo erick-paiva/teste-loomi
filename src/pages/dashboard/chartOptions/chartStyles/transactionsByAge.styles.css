@@ -1,4 +1,4 @@
-.arrow_box {
+.arrow_box-transactions {
     background: white;
     box-shadow: 0px 0px 20px #50459E33;
     border-radius: 6px;
@@ -13,22 +13,25 @@
     min-width: 117px;
     min-height: 42px;
     flex-direction: row;
+    letter-spacing: 0.64px;
+    font-weight: bold;
 }
 
-.arrow_box .text {
+.arrow_box-transactions .text {
     font-size: 16px;
     font-family: Ubuntu;
     font-style: italic;
     margin-left: 10px;
 }
 
-#container {
+#container-transactions {
     display: flex;
     align-items: center;
     background: transparent;
 }
 
-#arrow {
+
+#arrow-transactions {
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
     transform: rotate(-90deg);
     width: 5px;

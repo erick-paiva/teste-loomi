@@ -1,39 +1,35 @@
-.arrow_box-container {
+.arrow_box-categorie {
     background: white;
     box-shadow: 0px 0px 20px #50459E33;
     border-radius: 6px;
     opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 20px;
     font-family: Ubuntu;
     color: #2F2D32;
     opacity: 1;
     min-width: 117px;
     min-height: 42px;
-    padding: 8px 12px;
-
-}
-
-.arrow_box-info{
-    font-size: 20px;
-    /* margin-left: 10px; */
+    flex-direction: row;
     font-weight: bold;
 }
 
-.arrow_box-info .text {
+.arrow_box-categorie .text {
     font-size: 16px;
     font-family: Ubuntu;
     font-style: italic;
     margin-left: 10px;
 }
 
-#container-customer {
+#container-category {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     background: transparent;
 }
 
-#arrow-customer {
-    margin-top: 12px;
+#arrow-category {
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
     transform: rotate(-90deg);
     width: 5px;

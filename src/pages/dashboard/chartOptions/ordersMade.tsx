@@ -1,8 +1,63 @@
-"./chartStyles/profile.styles.css";
+import { useEffect, useState } from "react";
+import Charts from "../../../components/charts";
+import { api } from "../../../services/api";
 
-export const ordersMade = (series?: object): any => {
+interface Props {
+  endpoints: string[];
+}
+interface IResponse {
+  month: number;
+  value: number;
+}
+interface ISeries {
+  name: string;
+  data: number[];
+}
 
-  const data = {
+export const OrdersMade = ({ endpoints }: Props) => {
+  const mockSeries = [
+    {
+      name: "Pedidos realizados",
+      data: [500, 650, 400, 700, 780, 730, 400, 550, 465, 545, 565, 575],
+    },
+    {
+      name: "Pedidos cancelados",
+      data: [50, 70, 600, 450, 730, 900, 900, 1100, 500, 490, 354, 670],
+    },
+  ];
+
+  const [series, setSeries] = useState(mockSeries);
+  const [seriesResponse, setSeriesReposnse] = useState<ISeries[]>([]);
+
+  useEffect(() => {
+    api.get(endpoints[0]).then(({ data }) => {
+      const values: IResponse[] = Object.values(data);
+      const newSeries: ISeries[] = [
+        {
+          name: "Pedidos realizados",
+          data: values.map((item) => item.value),
+        },
+      ];
+
+      api.get(endpoints[1]).then(({ data }) => {
+        const values: IResponse[] = Object.values(data);
+        const newSerie = values.map((item) => item.value);
+        setSeriesReposnse([
+          ...newSeries,
+          {
+            name: "Pedidos cancelados",
+            data: newSerie,
+          },
+        ]);
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    setSeries(seriesResponse);
+  }, [seriesResponse]);
+
+  const options = {
     type: "bar",
     height: "400px",
     width: "608px",
@@ -21,7 +76,7 @@ export const ordersMade = (series?: object): any => {
         },
         stacked: false,
       },
-      colors: ["#109E8E", "#F18F7F" ],
+      colors: ["#109E8E", "#F18F7F"],
       grid: {
         show: false,
       },
@@ -107,17 +162,8 @@ export const ordersMade = (series?: object): any => {
         fontFamily: "Ubuntu",
       },
     },
-    series: [
-      {
-        name: "Pedidos realizados",
-        data: [500, 650, 400, 700, 780, 730, 400, 550, 465, 545, 565, 575],
-      },
-      {
-        name: "Pedidos cancelados",
-        data: [50, 70, 600, 450, 730, 900, 900, 1100, 500, 490, 354, 670],
-      },
-    ],
+    series: series,
   };
 
-  return data;
+  return <Charts data={options} />;
 };

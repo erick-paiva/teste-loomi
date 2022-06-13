@@ -2,7 +2,6 @@ import { Box, Flex, Heading, HStack, keyframes } from "@chakra-ui/react";
 import Header from "../../components/header";
 import BackgroundImage from "../../assets/imagesPage/backgroundImage.svg";
 import Sidebar from "../../components/sidebar";
-import StartCard from "../../components/startCard";
 import Chart from "../../components/charts";
 import { profitExpectation } from "./chartOptions/profitExpectation";
 import { orderPerMonth } from "./chartOptions/orderPerMonth";
@@ -14,9 +13,10 @@ import { transactionByCustomerType } from "./chartOptions/transactionByCustomerT
 import { transactionByDevice } from "./chartOptions/transactionByDevice";
 import { useEffect, useState } from "react";
 import ProductsTable from "./productsTable";
+import SessionHome from "./sessionHome";
+import FunnelSession from "./funnelSession";
 
 const Dashboard = () => {
-  const [loading, setLoading] = useState(true);
 
   const scrollBarStyle = {
     "&::-webkit-scrollbar": {
@@ -36,52 +36,6 @@ const Dashboard = () => {
   from {opacity: 0;}
   to {opacity: 1;}
 `;
-
-  const data = [
-    {
-      title: "Ticket médio últimas 24h",
-      tagText: "+ 15 %",
-      warning: "em relação a ontem",
-      text: "R$ 9.292,00",
-    },
-    {
-      title: "Ticket médio mensal",
-      tagText: "+ 15 %",
-      warning: "em relação a julho",
-      text: "R$ 129.292,00",
-    },
-    {
-      title: "Produtos em manutenção",
-      tagText: "há 5 dias",
-      text: "8 produtos",
-      type: "warning",
-    },
-    {
-      title: "Produtos em manutenção",
-      tagText: "há 5 dias",
-      warning: "repor o quanto antes",
-      text: "10 produtos",
-      type: "warning",
-    },
-    {
-      title: "Pedidos realizados no mês",
-      tagText: "+ 15 %",
-      warning: "em relação a julho",
-      text: "10 pedidos",
-    },
-    {
-      title: "Produtos vendidos no mês",
-      tagText: "+ 15 %",
-      warning: "em relação a julho",
-      text: "23 pedidos",
-    },
-  ];
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, [loading]);
 
   return (
     <Flex
@@ -124,18 +78,14 @@ const Dashboard = () => {
               >
                 Início
               </Heading>
-              <HStack
-                overflowX="auto"
-                css={scrollBarStyle}
-                spacing="32px"
-                minH="200px"
-              >
-                {data.map((item, i) => (
+
+              {/* {dataStart.map((item, i) => (
                   <Box key={item.title + i} minW="232px">
                     <StartCard information={item} />
                   </Box>
-                ))}
-              </HStack>
+                ))} */}
+              <SessionHome />
+              {/* </HStack> */}
             </Box>
             <Box mb="40px" minW="80%" mr="40px">
               <Heading
@@ -191,11 +141,12 @@ const Dashboard = () => {
                 spacing="32px"
                 minH="200px"
               >
-                {data.map((item, i) => (
+                {/* {dataStart.map((item, i) => (
                   <Box key={item.title + i + 1} minW="232px">
                     <StartCard information={item} />
                   </Box>
-                ))}
+                ))} */}
+                <FunnelSession />
               </HStack>
             </Box>
 

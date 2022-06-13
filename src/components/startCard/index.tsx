@@ -11,16 +11,17 @@ interface IStartCardProps {
 
 const StartCard = ({ information }: IStartCardProps) => {
   const { title, warning, tagText, text, type = "information" } = information;
-  const textSplit = text.split(" ");
+  const textSplit = text.includes("R$")
+    ? ["R$", text.slice(3, text.length)]
+    : text.split(" ");
+  const isLetter = /\D/g;
 
-  const regex = /[0-9]/;
-  const regexLetter = /[a-z]/;
-  const isNumber = regex.test(textSplit[0]) && regexLetter.test(textSplit[1]);
+  const isNumber = !isLetter.test(textSplit[0]) && isLetter.test(textSplit[1]);
 
   return (
     <Center
       h="168px"
-      w="232px"
+      minW="232px"
       bg="white"
       borderRadius="15px"
       flexDirection="column"
@@ -46,7 +47,11 @@ const StartCard = ({ information }: IStartCardProps) => {
             minW="55px"
             maxW="100px"
             h="23px"
-            color={type === "information" ? "green.200" : "red.100"}
+            color={
+              type === "information" && !tagText.includes("-")
+                ? "green.200"
+                : "red.100"
+            }
             fontSize="12px"
             boxShadow="0px 0px 20px #0000001A;"
             size="20px"
@@ -59,7 +64,7 @@ const StartCard = ({ information }: IStartCardProps) => {
             <TagLabel>{tagText}</TagLabel>
           </Tag>
         </Flex>
-        {warning && (
+        {warning ? (
           <Text
             mt="10px"
             fontSize="14px"
@@ -68,7 +73,10 @@ const StartCard = ({ information }: IStartCardProps) => {
           >
             {warning}
           </Text>
-        )}
+        ):
+          <Text marginY="15px" />
+        }
+        
         {!isNumber ? (
           <Text
             mt="18px"
@@ -89,7 +97,6 @@ const StartCard = ({ information }: IStartCardProps) => {
             alignItems="center"
             justifyContent="center"
             fontSize="16px"
-            mt="18px"
             color="gray.600"
           >
             <Text mr="12px" as="span" fontSize="20px" fontWeight="bold">

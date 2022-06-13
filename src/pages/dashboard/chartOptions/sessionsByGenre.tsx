@@ -1,4 +1,6 @@
-import "./chartStyles/braids.styles.css";
+import { useEffect, useState } from "react";
+import Charts from "../../../components/charts";
+import "./chartStyles/sessionsByGenre.styles.css";
 
 interface IDonutChartProps {
   series: string[];
@@ -7,7 +9,25 @@ interface IDonutChartProps {
   w: object | any;
 }
 
-export const sessionsByGenre = (series?: object): any => {
+interface Props {
+  data: {
+    [key: string]: number[] | any;
+  };
+}
+
+export const SessionsByGenre = ({ data }: Props) => {
+  const mockSeries = [20, 30];
+
+  const [series, setSeries] = useState(mockSeries);
+  useEffect(() => {
+    try {
+      const values: number[] = Object.values(data["sessions-per-sex"]);
+      setSeries(values);
+    } catch (error) {
+      setSeries(mockSeries);
+    }
+  }, [data]);
+
   const customTooltip = ({ seriesIndex, w }: IDonutChartProps) => {
     const series = w.config.series;
     const value: number | string = (+series[seriesIndex])
@@ -18,9 +38,9 @@ export const sessionsByGenre = (series?: object): any => {
       .split("R$")[1];
 
     return `
-    <div id="container">
-      <span id="arrow"></span>
-      <div class="arrow_box">
+    <div id="container-genre">
+      <span id="arrow-genre"></span>
+      <div class="arrow_box-genre">
         <span class="text">
           R$
         </span>
@@ -30,7 +50,7 @@ export const sessionsByGenre = (series?: object): any => {
         `;
   };
 
-  const data = {
+  const options: object = {
     type: "donut",
     height: "400px",
     width: "539px",
@@ -41,10 +61,7 @@ export const sessionsByGenre = (series?: object): any => {
       dataLabels: {
         enabled: false,
       },
-      labels: [
-        "Masculino",
-        "Femenino",
-      ],
+      labels: ["Masculino", "Femenino"],
       title: {
         text: "Sessões por gênero",
         offsetX: 24,
@@ -89,8 +106,8 @@ export const sessionsByGenre = (series?: object): any => {
       },
       colors: ["#F7C982", "#252E48"],
     },
-    series: [20, 30],
+    series: series,
   };
 
-  return data;
+  return <Charts data={options} showSelect={false} stylize={true} />;
 };

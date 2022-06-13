@@ -1,17 +1,96 @@
-"./chartStyles/profile.styles.css";
+import { useEffect, useState } from "react";
+import Charts from "../../../components/charts";
+import { api } from "../../../services/api";
+import "./chartStyles/profitExpectation.styles.css";
 
+interface Props {
+  endpoints: string[];
+}
 interface IBarChartProps {
   series: string[];
   seriesIndex: number;
   dataPointIndex: number;
   w: object | any;
 }
+interface IResponse {
+  month: number;
+  value: number;
+}
 
-export const profitExpectation = (series?: object): any => {
-  const customTooltip = ({
-    dataPointIndex,
-    w,
-  }: IBarChartProps) => {
+interface ISeries {
+  name: string;
+  data: number[];
+  type: string;
+}
+
+export const ProfitExpectation = ({ endpoints }: Props) => {
+  const mockSeries = [
+    {
+      name: "Real",
+      data: [500, 650, 400, 700, 780, 730, 400, 550, 465, 545, 565, 575],
+      type: "column",
+    },
+    {
+      name: "Expetativa",
+      data: [200, 700, 600, 1000, 400, 600, 450, 398, 400, 380, 400, 360],
+      type: "column",
+    },
+    {
+      name: "Real do ano anterior",
+      type: "line",
+      data: [200, 700, 600, 1000, 400, 600, 450, 398, 400, 380, 400, 360],
+    },
+    {
+      name: "Expectativa do ano anterior",
+      type: "line",
+      data: [50, 70, 600, 450, 730, 900, 900, 1100, 500, 490, 354, 670],
+    },
+  ];
+
+  const [series, setSeries] = useState(mockSeries);
+  const [seriesResponse, setSeriesReposnse] = useState<ISeries[]>([]);
+
+  useEffect(() => {
+    api.get(endpoints[0]).then(({ data }) => {
+      const values: IResponse[] = Object.values(data);
+      const newSeries: ISeries[] = [
+        {
+          name: "Mês atual",
+          data: values.map((item) => item.value),
+          type: "column",
+        },
+      ];
+
+      api.get(endpoints[1]).then(({ data }) => {
+        const values: IResponse[] = Object.values(data);
+        const newSerie = values.map((item) => item.value);
+        setSeriesReposnse([
+          ...newSeries,
+          {
+            name: "Expetativa",
+            data: newSerie,
+            type: "column",
+          },
+          {
+            name: "Real do ano anterior",
+            data: series[0].data,
+            type: "line",
+          },
+          {
+            name: "Expectativa do ano anterior",
+            data: newSerie,
+            type: "line",
+          },
+        ]);
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    setSeries(seriesResponse);
+  }, [seriesResponse]);
+
+  const customTooltip = ({ dataPointIndex, w }: IBarChartProps) => {
     const series = w.config.series;
     const currentMonth = series[0].data[dataPointIndex];
 
@@ -27,7 +106,7 @@ export const profitExpectation = (series?: object): any => {
 
     return `
     <div id="container-wait">
-      <div class="container">
+      <div class="container-w">
       
         <div class="arrow_box-await">
           <div class="arrow-box-set" >
@@ -64,7 +143,7 @@ export const profitExpectation = (series?: object): any => {
     });
   }
 
-  const data = {
+  const options = {
     type: "line",
     height: "400px",
     width: "715px",
@@ -223,29 +302,8 @@ export const profitExpectation = (series?: object): any => {
         fontFamily: "Ubuntu",
       },
     },
-    series: [
-      {
-        name: "Mês atual",
-        data: [500, 650, 400, 700, 780, 730, 400, 550, 465, 545, 565, 575],
-        type: "column",
-      },
-      {
-        name: "Mês do ano anterior",
-        data: [200, 700, 600, 1000, 400, 600, 450, 398, 400, 380, 400, 360],
-        type: "column",
-      },
-      {
-        name: "Real do ano anterior",
-        type: "line",
-        data: [200, 700, 600, 1000, 400, 600, 450, 398, 400, 380, 400, 360],
-      },
-      {
-        name: "Expectativa do ano anterior",
-        type: "line",
-        data: [50, 70, 600, 450, 730, 900, 900, 1100, 500, 490, 354, 670],
-      },
-    ],
+    series: series,
   };
 
-  return data;
+  return <Charts data={options} />;
 };

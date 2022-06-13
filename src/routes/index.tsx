@@ -7,7 +7,7 @@ export const Routes = () => {
   return (
     <Switch>
       <Route path="/" exact component={Login} />
-      <Route path="/dashboard" exact component={Dashboard} />
+      <Route path="/dashboard" exact component={Dashboard} isPrivate />
     </Switch>
   );
 };

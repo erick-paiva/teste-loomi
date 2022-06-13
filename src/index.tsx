@@ -3,6 +3,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { App } from "./App";
+import { AppProvider } from "./contexts";
 import { theme } from "./styles";
 
 const container = document.getElementById("root");
@@ -14,7 +15,9 @@ root.render(
     <ChakraProvider theme={theme}>
       <BrowserRouter>
         <ColorModeScript />
-        <App />
+        <AppProvider>
+          <App />
+        </AppProvider>
       </BrowserRouter>
     </ChakraProvider>
   </React.StrictMode>

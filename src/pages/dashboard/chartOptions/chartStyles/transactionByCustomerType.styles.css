@@ -26,13 +26,13 @@
     margin-left: 10px;
 }
 
-#container {
+#container-customer {
     display: flex;
     align-items: flex-start;
     background: transparent;
 }
 
-#arrow {
+#arrow-customer {
     margin-top: 12px;
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
     transform: rotate(-90deg);

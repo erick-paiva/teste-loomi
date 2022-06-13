@@ -36,7 +36,7 @@ export const theme = extendTheme({
     },
     fonts: {
       heading: "Inter",
-      body: "Ubuntu",
+      body: "Ubuntu, sans-serif",
     },
     fontSizes: {
       xs: "0.75rem",

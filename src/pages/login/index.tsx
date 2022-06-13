@@ -12,10 +12,10 @@ import LogoLoomi from "../../assets/imagesPage/logoLoomi.svg";
 import { InputChakra } from "../../components/inputChakra";
 import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { useAuth } from "../../contexts/AuthContext";
 
 interface FormData {
   email: string;
@@ -24,6 +24,7 @@ interface FormData {
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const { signIn } = useAuth();
 
   const signInSchema = yup.object().shape({
     email: yup
@@ -41,11 +42,11 @@ const Login = () => {
     resolver: yupResolver(signInSchema),
   });
 
-  const handleSignIn = (data: FormData) => {
-    console.log(data);
+  const handleSignIn = async (data: FormData) => {
+    await signIn(data);
+
   };
 
-  const history = useHistory();
   return (
     <Center
       h="100vh"

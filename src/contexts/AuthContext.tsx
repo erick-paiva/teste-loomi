@@ -8,6 +8,8 @@ import {
 import { User } from "../@types";
 import { api } from "../services/api";
 import { useCookies } from "react-cookie";
+import { useHistory } from "react-router-dom";
+import { useToast } from "@chakra-ui/react";
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -44,6 +46,8 @@ const useAuth = () => {
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
+  const history = useHistory();
+  const toast = useToast();
   const [dataUser, setData] = useState<AuthState>(() => {
     const accessToken = cookies.accessToken;
     const user = localStorage.getItem("@Loomi:user");
@@ -59,15 +63,29 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     const response = await api.post("/login", { email, password });
     const user = await api.get("/me");
 
-    const { accessToken } = response.data;
-    setCookie("accessToken", accessToken, { path: "/accessToken" });
+    const accessToken = response.data["access-token"];
+    if (accessToken) {
+      history.push("/dashboard");
+    }
+    setCookie("accessToken", accessToken, {
+      maxAge: 86400,
+    });
 
     localStorage.setItem("@Loomi:user", JSON.stringify(user.data));
     setData({ accessToken, user: user.data });
+
+    toast({
+      title: "Bem vindo!",
+      description: `Bem vindo ${user.data.name}`,
+      status: "success",
+      duration: 4000,
+      position: "top-right",
+      isClosable: true,
+    });
   }, []);
 
   const signOut = useCallback(() => {
-    removeCookie("accessToken", { path: "/accessToken" });
+    removeCookie("accessToken");
 
     setData({} as AuthState);
   }, []);

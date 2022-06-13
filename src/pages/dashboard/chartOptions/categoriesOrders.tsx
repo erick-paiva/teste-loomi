@@ -1,4 +1,5 @@
-import "./chartStyles/braids.styles.css";
+import Charts from "../../../components/charts";
+import "./chartStyles/categories.styles.css";
 
 interface IDonutChartProps {
   series: string[];
@@ -7,7 +8,7 @@ interface IDonutChartProps {
   w: object | any;
 }
 
-export const categoriesOrders = (series?: object): any => {
+export const CategoriesOrders = (): any => {
   const customTooltip = ({ seriesIndex, w }: IDonutChartProps) => {
     const series = w.config.series;
     const value: number | string = (+series[seriesIndex])
@@ -18,9 +19,9 @@ export const categoriesOrders = (series?: object): any => {
       .split("R$")[1];
 
     return `
-    <div id="container">
-      <span id="arrow"></span>
-      <div class="arrow_box">
+    <div id="container-category">
+      <span id="arrow-category"></span>
+      <div class="arrow_box-categorie">
         <span class="text">
           R$
         </span>
@@ -30,7 +31,7 @@ export const categoriesOrders = (series?: object): any => {
         `;
   };
 
-  const data = {
+  const options: object = {
     type: "donut",
     height: "400px",
     width: "608px",
@@ -95,5 +96,5 @@ export const categoriesOrders = (series?: object): any => {
     series: [44, 35, 22, 80, 15],
   };
 
-  return data;
+  return <Charts data={options} showSelect={false} stylize={true} />;
 };

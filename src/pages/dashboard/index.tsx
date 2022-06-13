@@ -78,14 +78,7 @@ const Dashboard = () => {
               >
                 Início
               </Heading>
-
-              {/* {dataStart.map((item, i) => (
-                  <Box key={item.title + i} minW="232px">
-                    <StartCard information={item} />
-                  </Box>
-                ))} */}
               <SessionHome />
-              {/* </HStack> */}
             </Box>
             <Box mb="40px" minW="80%" mr="40px">
               <Heading
@@ -141,11 +134,6 @@ const Dashboard = () => {
                 spacing="32px"
                 minH="200px"
               >
-                {/* {dataStart.map((item, i) => (
-                  <Box key={item.title + i + 1} minW="232px">
-                    <StartCard information={item} />
-                  </Box>
-                ))} */}
                 <FunnelSession />
               </HStack>
             </Box>

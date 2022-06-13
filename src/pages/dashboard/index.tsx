@@ -13,6 +13,7 @@ import { sessionsByGenre } from "./chartOptions/sessionsByGenre";
 import { transactionByCustomerType } from "./chartOptions/transactionByCustomerType";
 import { transactionByDevice } from "./chartOptions/transactionByDevice";
 import { useEffect, useState } from "react";
+import ProductsTable from "./productsTable";
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -93,8 +94,11 @@ const Dashboard = () => {
       bgColor="purple.50"
       flexDirection="column"
       animation={`${animation} 1s ease-in-out`}
+      fontFamily="Ubuntu"
     >
-      <Header userName="eduardo" />
+      <Box>
+        <Header userName="eduardo" />
+      </Box>
       <Flex w="100%" overflowX="hidden" css={scrollBarStyle}>
         <Box minW="40px" mr="20px">
           <Sidebar />
@@ -107,7 +111,7 @@ const Dashboard = () => {
           overflowY="auto"
           css={scrollBarStyle}
         >
-          <Box minW="70%" minH="70%" ml="20px">
+          <Box minW="70%" minH="70%" ml="20px" mb="108px">
             <Box margin="40px 40px 40px 0" minW="80%">
               <Heading
                 as="h3"
@@ -244,6 +248,7 @@ const Dashboard = () => {
                 </Box>
               </HStack>
             </Box>
+            <ProductsTable />
           </Box>
         </Flex>
       </Flex>

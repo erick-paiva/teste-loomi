@@ -1,8 +1,37 @@
-import "./chartStyles/orderPerMonth.styles.css";
+import { useEffect, useState } from "react";
+import Charts from "../../../components/charts";
+import { api } from "../../../services/api";
 
-export const orderPerMonth = (series?: object): any => {
-  
-  const data =  {
+interface Props {
+  endpoint: string;
+}
+
+interface IResponse {
+  month: number;
+  value: number;
+}
+
+export const OrderPerMonth = ({ endpoint }: Props) => {
+  const [series, setSeries] = useState([
+    {
+      name: "pedidos",
+      data: [31, 40, 28, 51, 42, 93, 50, 70, 60, 82],
+    },
+  ]);
+
+  useEffect(() => {
+    api.get(endpoint).then(({ data }) => {
+      const values: IResponse[] = Object.values(data);
+      setSeries([
+        {
+          name: "pedidos",
+          data: values.map((item) => item.value),
+        },
+      ]);
+    });
+  }, []);
+
+  const options = {
     type: "bar",
     height: "400px",
     width: "608px",
@@ -86,13 +115,8 @@ export const orderPerMonth = (series?: object): any => {
         ],
       },
     },
-    series: [
-      {
-        name: "pedidos",
-        data: [31, 40, 28, 51, 42, 93, 50, 70, 60, 82],
-      },
-    ],
+    series: series,
   };
 
-  return data;
+  return <Charts data={options} />;
 };

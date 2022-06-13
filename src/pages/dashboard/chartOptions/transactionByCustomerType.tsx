@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import Charts from "../../../components/charts";
 import "./chartStyles/transactionByCustomerType.styles.css";
 
 interface IDonutChartProps {
@@ -7,12 +9,34 @@ interface IDonutChartProps {
   w: object | any;
 }
 
-export const transactionByCustomerType = (series?: object): any => {
-  const customTooltip = ({
-    // dataPointIndex,
-    seriesIndex,
-    w,
-  }: IDonutChartProps) => {
+interface Props {
+  data: {
+    [key: string]: number[] | any;
+  };
+}
+
+interface IResponse {
+  category: string;
+  value: number;
+}
+
+export const TransactionByCustomerType = ({ data }: Props) => {
+  const mockSeries = [2861, 2345];
+
+  const [series, setSeries] = useState(mockSeries);
+
+  useEffect(() => {
+    try {
+      const values: IResponse[] = Object.values(
+        data["transactions-per-client-type"]
+      );
+      setSeries(values.map((item) => item.value));
+    } catch (error) {
+      setSeries(mockSeries);
+    }
+  }, [data]);
+
+  const customTooltip = ({ seriesIndex, w }: IDonutChartProps) => {
     const series = w.config.series;
     let transaction: number | string =
       +series[seriesIndex] >= 1000
@@ -29,8 +53,8 @@ export const transactionByCustomerType = (series?: object): any => {
     ).toFixed(2);
 
     return `
-    <div id="container">
-      <span id="arrow"></span>
+    <div id="container-customer">
+      <span id="arrow-customer"></span>
       <div class="arrow_box-container">
         <div class="arrow_box-info">
           ${percent}
@@ -49,7 +73,7 @@ export const transactionByCustomerType = (series?: object): any => {
         `;
   };
 
-  const data = {
+  const options: object = {
     type: "donut",
     height: "400px",
     width: "600px",
@@ -105,8 +129,8 @@ export const transactionByCustomerType = (series?: object): any => {
       },
       colors: ["#9FD8D5", "#7BB686"],
     },
-    series: [2861, 2345],
+    series: series,
   };
 
-  return data;
+  return <Charts data={options} showSelect={false} stylize={true} />;
 };

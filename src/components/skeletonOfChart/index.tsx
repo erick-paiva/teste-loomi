@@ -15,23 +15,28 @@ interface Props {
   type?: string;
   quantity?: number;
   horizontal?: boolean;
+  height?: number | string;
+  width?: number | string;
 }
 
 const SkeletonOfChart = ({
   type = "bar",
   quantity = 7,
   horizontal = false,
+  height = 400,
+  width = 500,
 }: Props) => {
   const col = generateArray(quantity);
 
+  console.log(height);
   if (type === "donut") {
-    return <TypeDonut />;
+    return <TypeDonut height={height} width={width} />;
   }
 
   return (
     <Center
-      h="415px"
-      w="500px"
+      h={height + "px"}
+      w={width + "px"}
       alignItems={horizontal ? "flex-start" : "center"}
       flexDirection="column"
       justifyContent="space-between"
@@ -56,8 +61,10 @@ const SkeletonOfChart = ({
       </VStack>
       <Center
         w="100%"
+        h="100%"
         mt="20px"
         {...(horizontal && { justifyContent: "flex-start" })}
+        {...(!horizontal && { alignItems: "flex-end" })}
       >
         <HStack
           spacing={4}
@@ -71,11 +78,22 @@ const SkeletonOfChart = ({
             <Flex key={index} flexDirection="column">
               <Stack>
                 <Skeleton
-                  h={generateRandomNumber(40, 70)}
-                  w="20px"
+                  h={generateRandomNumber(40, 90) + "px"}
+                  w={{
+                    lg: "10px",
+                    xl: "15px",
+                    "2xl": "20px",
+                  }}
                   borderRadius="5px"
                 ></Skeleton>
-                <Skeleton h="10px" w="20px">
+                <Skeleton
+                  h="10px"
+                  w={{
+                    lg: "10px",
+                    xl: "15px",
+                    "2xl": "20px",
+                  }}
+                >
                   <Box />
                 </Skeleton>
               </Stack>

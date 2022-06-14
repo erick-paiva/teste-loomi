@@ -1,5 +1,4 @@
 import {
-  Box,
   Center,
   Divider,
   Flex,
@@ -16,8 +15,24 @@ import { BiSearch } from "react-icons/bi";
 import CardProducts from "../../components/cardProducts";
 import ProductImage from "../../assets/imagesPage/product.png";
 import Paginate from "../../components/paginate";
+import { useProduct } from "../../contexts/ProductsContext";
+import { useEffect, useState } from "react";
+import { IProduct } from "../../@types";
+import SkeletonCardProducts from "../../components/skeletonCardProducts";
 
 const ProductsTable = () => {
+  const [search, setSearch] = useState("");
+  const [foundProducts, setFoundProducts] = useState<IProduct[]>([]);
+  const {
+    currentPage,
+    currentPageNum,
+    searchProduct,
+    advancePage,
+    backPage,
+    totalPages,
+    loading
+  } = useProduct();
+
   const theadThStyles = {
     fontSize: "16px",
     fontWeight: "500",
@@ -43,6 +58,20 @@ const ProductsTable = () => {
     },
   };
 
+  const handleSearch = async (evt: any) => {
+    evt.preventDefault();
+    const response: IProduct[] = await searchProduct(search);
+    if (response?.length > 0) {
+      setFoundProducts(response);
+    }
+  };
+
+  useEffect(() => {
+    if (!search.length) {
+      setFoundProducts([]);
+    }
+  }, [search]);
+
   return (
     <Flex
       minH="1182px"
@@ -64,7 +93,7 @@ const ProductsTable = () => {
           Listagem de produtos
         </Heading>
 
-        <Box>
+        <Flex as="form" onSubmit={handleSearch}>
           <InputChakra
             name="search"
             placeholder="Pesquisar produtos"
@@ -72,8 +101,9 @@ const ProductsTable = () => {
             fontFamily="Ubuntu"
             _placeholder={{ color: "black.400", opacity: 0.4 }}
             paddingLeft="40px"
+            onChange={(e) => setSearch(e.target.value)}
           />
-        </Box>
+        </Flex>
       </Center>
       <TableContainer mt="50px" minH="800px" mb="40px" sx={scrollBarStyle}>
         <Table>
@@ -110,12 +140,42 @@ const ProductsTable = () => {
             </Tr>
           </Thead>
           <Tbody>
-            <CardProducts img={ProductImage} description="Banco Cajá" />
+
+            {loading && <SkeletonCardProducts />}
+
+            {foundProducts.length > 0 && !loading &&
+              foundProducts.map(({ id, name, description, status }) => (
+                <CardProducts
+                  key={id}
+                  img={ProductImage}
+                  description={description}
+                  name={name}
+                  status={status}
+                />
+              ))}
+
+            {!foundProducts.length && !loading &&
+              currentPage.map(({ id, name, description, status }) => (
+                <CardProducts
+                  key={id}
+                  img={ProductImage}
+                  description={description}
+                  name={name}
+                  status={status}
+                />
+              ))}
           </Tbody>
         </Table>
       </TableContainer>
       <Flex justifyContent="flex-end" mt="20px">
-        <Paginate currentPage={1} advance={() => {}} back={() => {}} />
+        {!foundProducts.length && (
+          <Paginate
+            currentPage={currentPageNum}
+            advance={advancePage}
+            back={backPage}
+            totalPages={totalPages}
+          />
+        )}
       </Flex>
     </Flex>
   );

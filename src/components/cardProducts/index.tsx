@@ -5,9 +5,11 @@ import TagChakra from "../tagChakra";
 interface Props {
   img: string;
   description: string;
+  name: string;
+  status: string;
 }
 
-const CardProducts = ({ img, description }: Props) => {
+const CardProducts = ({ img, description, name, status }: Props) => {
   const dataTags = [
     {
       text: "banco",
@@ -25,7 +27,7 @@ const CardProducts = ({ img, description }: Props) => {
 
   return (
     <Tr>
-      <Td paddingY="30px" minW="400px">
+      <Td paddingY="30px" minW="400px" maxW="638px">
         <Flex alignItems="center">
           <Img h="80px" src={img} alt="description" />
           <Text
@@ -34,6 +36,10 @@ const CardProducts = ({ img, description }: Props) => {
             color="black.400"
             opacity="1"
             fontFamily="Ubuntu"
+            whiteSpace="nowrap"
+            overflow="hidden"
+            textOverflow="ellipsis"
+            fontSize="20px"
           >
             {description}
           </Text>
@@ -48,7 +54,7 @@ const CardProducts = ({ img, description }: Props) => {
         paddingY="30px"
         minW="500px"
       >
-        Madeira escura; Madeira média
+        {name}
       </Td>
       <Td paddingY="30px" minW="400px">
         <HStack
@@ -71,7 +77,7 @@ const CardProducts = ({ img, description }: Props) => {
         paddingY="30px"
       >
         <Flex alignItems="center">
-          <Text mr="10px">Ativo</Text>
+          <Text mr="10px">{status}</Text>
           <HiCheck size="30px" color="#5A4CA7" />
         </Flex>
       </Td>

@@ -6,6 +6,7 @@ import {
   Text,
   Tooltip,
   keyframes,
+  useMediaQuery,
 } from "@chakra-ui/react";
 
 interface IconSidebarProps {
@@ -26,6 +27,8 @@ const IconSidebar = ({
     from {opacity: 0; transform: translateX(-100px); z-index: -1;}
     to {opacity: 1;}
   `;
+
+  const [isLargerThan1000] = useMediaQuery("(max-width: 1440px)");
 
   return (
     <Flex
@@ -57,13 +60,17 @@ const IconSidebar = ({
           {...(show && { marginLeft: "24px" })}
           transition="all 0.35s ease-in-out"
         >
-          <Img src={data.Icon} alt={data.name} />
+          <Img
+            src={data.Icon}
+            alt={data.name}
+            {...(isLargerThan1000 && { height: "30px" })}
+          />
           {show && (
             <Text
               animation={`${animation} 0.35s ease-in-out`}
               ml="24px"
               color="gray.600"
-              fontSize="22px"
+              fontSize={isLargerThan1000 ? "15px" : "22px"}
               letterSpacing="0.44px"
               opacity="1"
             >

@@ -137,11 +137,6 @@ const ProductsTable = () => {
             _placeholder={{ color: "black.400", opacity: 0.4 }}
             paddingLeft="40px"
             onChange={(e) => setSearch(e.target.value)}
-            h={{
-              lg: "30px",
-              xl: "40px",
-              "2xl": "60px",
-            }}
           />
         </Flex>
       </Center>

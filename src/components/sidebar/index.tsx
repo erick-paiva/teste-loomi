@@ -1,4 +1,12 @@
-import { Center, Img, Text, VStack, keyframes } from "@chakra-ui/react";
+import {
+  Center,
+  Img,
+  Text,
+  VStack,
+  keyframes,
+  Tooltip,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { options } from "./sideBarOptions";
 import Menu from "../../assets/sidebarImages/menu.svg";
 import { useState } from "react";
@@ -12,6 +20,12 @@ const Sidebar = () => {
   const handleClick = () => {
     setOpen(!open);
   };
+
+  const [isLargerThan1000] = useMediaQuery(
+    "(max-width: 1440px)"
+  );
+
+  console.log(isLargerThan1000);
 
   const animation = keyframes`
   from {opacity: 0; transform: translateX(-30px); z-index: -1;}
@@ -47,48 +61,73 @@ const Sidebar = () => {
             <HiOutlineArrowLeft size="25px" />
             <Text
               ml="33px"
-              fontSize="22px"
               color="gray.600"
               letterSpacing="0.44px"
+              fontSize={isLargerThan1000 ? "15px" : "22px"}
             >
               Fechar
             </Text>
           </Center>
         ) : (
-          <Img src={Menu} alt="home" />
+          <Img
+            src={Menu}
+            alt="home"
+            {...(isLargerThan1000 && { height: "30px" })}
+          />
         )}
       </Center>
 
       <VStack
-        spacing="25px"
+        spacing={isLargerThan1000 ? "12px" : "24px"}
         alignItems={open ? "flex-start" : "center"}
         w="100%"
       >
-        <Center
-          as="figure"
-          h="40px"
-          w={open ? "228px" : "40px"}
-          bg={open ? "orange.300" : "purple.500"}
-          borderRadius="6px"
+        <Tooltip
+          hasArrow
+          display={!open ? "flex" : "none"}
+          label={"Inicio"}
+          placement="right-start"
+          color="gray.600"
+          marginTop="5px"
+          bg="gray.200"
+          ml="30px"
+          h="33px"
+          minW="80px"
+          letterSpacing="0.32px"
+          alignItems="center"
+          justifyContent="center"
           opacity={1}
-          cursor="pointer"
-          justifyContent={open ? "flex-start" : "center"}
-          ml={open ? "24px" : "0"}
-          transition="all 0.3s ease-in-out"
         >
-          <Img src={Home} alt="home" />
+          <Center
+            as="figure"
+            h="40px"
+            w={open ? "228px" : "40px"}
+            bg={open ? "orange.300" : "purple.500"}
+            borderRadius="6px"
+            opacity={1}
+            cursor="pointer"
+            justifyContent={open ? "flex-start" : "center"}
+            ml={open ? "24px" : "0"}
+            transition="all 0.3s ease-in-out"
+          >
+            <Img
+              src={Home}
+              alt="home"
+              {...(isLargerThan1000 && { height: "30px" })}
+            />
 
-          {open && (
-            <Text
-              letterSpacing="0.44px"
-              fontSize="22px"
-              ml="24px"
-              color="white"
-            >
-              Início
-            </Text>
-          )}
-        </Center>
+            {open && (
+              <Text
+                letterSpacing="0.44px"
+                fontSize={isLargerThan1000 ? "15px" : "22px"}
+                ml="24px"
+                color="white"
+              >
+                Início
+              </Text>
+            )}
+          </Center>
+        </Tooltip>
         {options.map((option) => (
           <IconSidebar
             showToolTip={!open}

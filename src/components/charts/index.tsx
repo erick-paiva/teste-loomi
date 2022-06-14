@@ -25,38 +25,34 @@ const Chart: React.FC<Props> = ({
   stylize = false,
   loading = false,
 }: Props) => {
-  const {
-    options,
-    series,
-    type = "bar",
-    height = "400px",
-    width = "608px",
-  } = data;
+  const { options, series, type = "bar", height = 400, width = 608 } = data;
   const isHorizontal = options?.plotOptions?.bar?.horizontal as boolean;
 
-  const [newHeight, setNewHeight] = useState(height);
-  const [newWidth, setNewWidth] = useState(width);
+  const [newHeight, setNewHeight] = useState(removeStrings(height));
+  const [newWidth, setNewWidth] = useState(removeStrings(width));
 
-  const [isLargerThan1000] = useMediaQuery("(max-width: 1000px)");
+  const [isLargerThan1000] = useMediaQuery("(min-width: 1000px)");
 
-  const [isLargerThan1440] = useMediaQuery("(max-width: 1440px)");
+  const [isLargerThan1440] = useMediaQuery("(min-width: 1440px)");
 
   useEffect(() => {
-    if (isLargerThan1000) {
-      setNewHeight(removeStrings(height) - 100);
-      setNewWidth(removeStrings(width) - 100);
-    } else if (isLargerThan1440) {
+    if (isLargerThan1440) {
       setNewHeight(removeStrings(height) - 50);
       setNewWidth(removeStrings(width) - 50);
+    } else if (isLargerThan1000) {
+      setNewHeight(removeStrings(height) - 100);
+      setNewWidth(removeStrings(width) - 100);
     }
   }, [isLargerThan1000]);
 
-  if (loading) {
+  if (!loading) {
     return (
       <SkeletonOfChart
         type={type}
         quantity={isHorizontal ? 7 : 10}
         horizontal={isHorizontal}
+        height={newHeight}
+        width={newWidth}
       />
     );
   }
@@ -67,8 +63,8 @@ const Chart: React.FC<Props> = ({
         type={type as string | any}
         options={options}
         series={series}
-        height={newHeight}
-        width={newWidth}
+        height={newHeight + "px"}
+        width={newWidth + "px"}
         {...(stylize && { id: "chart" })}
       />
       {showSelect && (

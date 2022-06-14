@@ -28,7 +28,6 @@ const SkeletonOfChart = ({
 }: Props) => {
   const col = generateArray(quantity);
 
-  console.log(height);
   if (type === "donut") {
     return <TypeDonut height={height} width={width} />;
   }

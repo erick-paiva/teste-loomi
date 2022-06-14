@@ -7,8 +7,12 @@ import SessionHome from "./sessionHome";
 import FunnelSession from "./funnelSession";
 import SalesDashboardSession from "./salesDashboardSession";
 import UserProfileSession from "./userProfileSession";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Dashboard = () => {
+  const {
+    user: { avatar, name },
+  } = useAuth();
   const scrollBarStyle = {
     "&::-webkit-scrollbar": {
       width: "15px",
@@ -42,7 +46,7 @@ const Dashboard = () => {
       fontFamily="Ubuntu"
     >
       <Box>
-        <Header userName="eduardo" />
+        <Header userName={name} userAvatar={avatar} />
       </Box>
       <Flex w="100%" overflowX="hidden" css={scrollBarStyle}>
         <Box minW="40px" mr="20px">

@@ -45,7 +45,7 @@ const Chart: React.FC<Props> = ({
     }
   }, [isLargerThan1000]);
 
-  if (!loading) {
+  if (loading) {
     return (
       <SkeletonOfChart
         type={type}

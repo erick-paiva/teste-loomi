@@ -44,7 +44,6 @@ const Login = () => {
 
   const handleSignIn = async (data: FormData) => {
     await signIn(data);
-
   };
 
   return (
@@ -59,11 +58,23 @@ const Login = () => {
     >
       <Center h="100%" w="894px" bg="white">
         <Center flexDirection="column">
-          <Img src={LogoLoomi} alt="logoLoomi" />
+          <Img
+            src={LogoLoomi}
+            alt="logoLoomi"
+            h={{
+              lg: "150px",
+              xl: "170px",
+              "2xl": "226px",
+            }}
+          />
           <Heading
             as="h3"
             fontFamily="Nunito Sans"
-            fontSize="24px"
+            fontSize={{
+              lg: "15px",
+              xl: "20px",
+              "2xl": "24px",
+            }}
             fontWeight="600"
             margin="40px 0 65px"
           >
@@ -100,11 +111,16 @@ const Login = () => {
                     _hover={{
                       transform: "scale(1.1)",
                     }}
+                    fontSize={{
+                      lg: "15px",
+                      xl: "20px",
+                      "2xl": "30px",
+                    }}
                   >
                     {showPassword ? (
-                      <FaRegEye cursor="pointer" size="30px" />
+                      <FaRegEye cursor="pointer" />
                     ) : (
-                      <FaRegEyeSlash cursor="pointer" size="30px" />
+                      <FaRegEyeSlash cursor="pointer" />
                     )}
                   </Box>
                 }

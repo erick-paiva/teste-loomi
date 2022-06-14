@@ -1,10 +1,11 @@
-import { Box } from "@chakra-ui/react";
-import { memo } from "react";
+import { Box, useMediaQuery } from "@chakra-ui/react";
+import { memo, useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import SelectStart from "./select";
 import SkeletonOfChart from "../skeletonOfChart";
 import { ApexOptions } from "apexcharts";
 import "./styles.css";
+import { removeStrings } from "../../utils";
 interface Props {
   data: {
     options?: object | ApexOptions | any;
@@ -33,6 +34,23 @@ const Chart: React.FC<Props> = ({
   } = data;
   const isHorizontal = options?.plotOptions?.bar?.horizontal as boolean;
 
+  const [newHeight, setNewHeight] = useState(height);
+  const [newWidth, setNewWidth] = useState(width);
+
+  const [isLargerThan1000] = useMediaQuery("(max-width: 1000px)");
+
+  const [isLargerThan1440] = useMediaQuery("(min-width: 1440px)");
+
+  useEffect(() => {
+    if (isLargerThan1000) {
+      setNewHeight(removeStrings(height) - 100);
+      setNewWidth(removeStrings(width) - 100);
+    } else if (isLargerThan1440) {
+      setNewHeight(removeStrings(height) - 50);
+      setNewWidth(removeStrings(width) - 50);
+    }
+  }, [isLargerThan1000]);
+
   if (loading) {
     return (
       <SkeletonOfChart
@@ -49,8 +67,8 @@ const Chart: React.FC<Props> = ({
         type={type as string | any}
         options={options}
         series={series}
-        height={height}
-        width={width}
+        height={newHeight}
+        width={newWidth}
         {...(stylize && { id: "chart" })}
       />
       {showSelect && (

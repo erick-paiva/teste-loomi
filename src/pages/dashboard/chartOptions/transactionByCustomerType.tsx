@@ -13,6 +13,7 @@ interface Props {
   data: {
     [key: string]: number[] | any;
   };
+  loading?: boolean;
 }
 
 interface IResponse {
@@ -20,7 +21,7 @@ interface IResponse {
   value: number;
 }
 
-export const TransactionByCustomerType = ({ data }: Props) => {
+export const TransactionByCustomerType = ({ data, loading }: Props) => {
   const mockSeries = [2861, 2345];
 
   const [series, setSeries] = useState(mockSeries);
@@ -132,5 +133,5 @@ export const TransactionByCustomerType = ({ data }: Props) => {
     series: series,
   };
 
-  return <Charts data={options} showSelect={false} stylize={true} />;
+  return <Charts data={options} showSelect={false} stylize={true} loading={loading} />;
 };

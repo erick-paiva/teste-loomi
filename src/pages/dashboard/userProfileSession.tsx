@@ -11,6 +11,7 @@ interface IResponse {
 }
 
 const UserProfileSession = () => {
+  const [loading, setLoading] = useState(true);
   const [response, setResponse] = useState({} as IResponse);
   const scrollBarStyle = {
     "&::-webkit-scrollbar": {
@@ -29,6 +30,9 @@ const UserProfileSession = () => {
   useEffect(() => {
     api.get("/users-resume").then(({ data }) => {
       setResponse(data);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     });
   }, []);
 
@@ -47,17 +51,17 @@ const UserProfileSession = () => {
       </Heading>
       <HStack overflowX="auto" css={scrollBarStyle} spacing="32px" minH="200px">
         <Box bg="white" borderRadius="12px">
-          <TransactionsByAge data={response} />
+          <TransactionsByAge data={response} loading={loading} />
         </Box>
 
         <Box bg="white" borderRadius="12px">
-          <SessionsByGenre data={response} />
+          <SessionsByGenre data={response} loading={loading} />
         </Box>
         <Box bg="white" borderRadius="12px">
-          <TransactionByCustomerType data={response} />
+          <TransactionByCustomerType data={response} loading={loading} />
         </Box>
         <Box bg="white" borderRadius="12px">
-          <TransactionByDevice />
+          <TransactionByDevice loading={loading} />
         </Box>
       </HStack>
     </Box>

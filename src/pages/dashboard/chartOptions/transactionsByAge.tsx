@@ -17,9 +17,10 @@ interface Props {
   data: {
     [key: string]: number[] | IResponse[] | any;
   };
+  loading?: boolean;
 }
 
-export const TransactionsByAge = ({ data }: Props) => {
+export const TransactionsByAge = ({ data, loading }: Props) => {
   const mockSeries = [
     {
       name: "transações",
@@ -192,5 +193,12 @@ export const TransactionsByAge = ({ data }: Props) => {
     series: series,
   };
 
-  return <Charts data={options} showSelect={false} stylize={true} />;
+  return (
+    <Charts
+      data={options}
+      showSelect={false}
+      stylize={true}
+      loading={loading}
+    />
+  );
 };

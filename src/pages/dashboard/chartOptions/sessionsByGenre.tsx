@@ -13,9 +13,10 @@ interface Props {
   data: {
     [key: string]: number[] | any;
   };
+  loading?: boolean;
 }
 
-export const SessionsByGenre = ({ data }: Props) => {
+export const SessionsByGenre = ({ data, loading = true }: Props) => {
   const mockSeries = [20, 30];
 
   const [series, setSeries] = useState(mockSeries);
@@ -109,5 +110,12 @@ export const SessionsByGenre = ({ data }: Props) => {
     series: series,
   };
 
-  return <Charts data={options} showSelect={false} stylize={true} />;
+  return (
+    <Charts
+      data={options}
+      showSelect={false}
+      stylize={true}
+      loading={loading}
+    />
+  );
 };

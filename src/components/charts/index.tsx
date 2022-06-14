@@ -91,7 +91,11 @@ const Chart: React.FC<Props> = ({
           top="25px"
           right="24px"
           opacity="0.4"
-          w="179px"
+          w={{
+            lg: "90px",
+            xl: "110px",
+            "2xl": "179px",
+          }}
           h="37px"
         />
       )}

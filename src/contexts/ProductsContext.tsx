@@ -49,13 +49,19 @@ const ProductProvider = ({ children }: AuthProviderProps) => {
 
   const toast = useToast();
 
+  const changeLoadingToFalse = () => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  };
+
   const searchProduct = useCallback(async (search: string) => {
     setLoading(true);
     const searchResponse = api
       .get(`/products?page=1&limit=7&search=${search}`)
       .then((response) => {
         if (response.data.length > 0) {
-          setLoading(false);
+          changeLoadingToFalse();
           toast({
             title: "Produtos encontrados",
             description:
@@ -76,7 +82,7 @@ const ProductProvider = ({ children }: AuthProviderProps) => {
             isClosable: true,
             position: "top",
           });
-          setLoading(false);
+          changeLoadingToFalse();
         }
         return response.data;
       })
@@ -89,7 +95,7 @@ const ProductProvider = ({ children }: AuthProviderProps) => {
           isClosable: true,
           position: "top",
         });
-        setLoading(false);
+        changeLoadingToFalse();
       });
 
     return searchResponse;
@@ -104,7 +110,7 @@ const ProductProvider = ({ children }: AuthProviderProps) => {
           setCurrentPageNum(currentPageNum + 1);
         }
       }
-      setLoading(false);
+      changeLoadingToFalse();
     });
   };
 
@@ -116,7 +122,7 @@ const ProductProvider = ({ children }: AuthProviderProps) => {
         .then(({ data }) => {
           setCurrentPageNum(currentPageNum - 1);
           setCurrentPage(data);
-          setLoading(false);
+          changeLoadingToFalse();
         });
     }
   };
@@ -124,14 +130,14 @@ const ProductProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     api.get("/products").then((response) => {
       setProducts(response.data);
-      setLoading(false);
+      changeLoadingToFalse();
     });
   }, []);
 
   useEffect(() => {
     api.get(`/products?page=${currentPageNum}&limit=7`).then(({ data }) => {
       setCurrentPage(data);
-      setLoading(false);
+      changeLoadingToFalse();
     });
   }, []);
 

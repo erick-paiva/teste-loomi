@@ -96,7 +96,11 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
             flexDirection="column"
             alignItems="center"
             justifyContent="center"
-            h="60px"
+            h={{
+              lg: "30px",
+              xl: "40px",
+              "2xl": "60px",
+            }}
             mr="12px"
           >
             {Icon}

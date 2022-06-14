@@ -27,9 +27,34 @@ const CardProducts = ({ img, description, name, status }: Props) => {
 
   return (
     <Tr>
-      <Td paddingY="30px" minW="400px" maxW="638px">
+      <Td
+        paddingY="30px"
+        minW={{
+          lg: "200px",
+          xl: "300px",
+          "2xl": "400px",
+        }}
+        maxW={{
+          lg: "250px",
+          xl: "300px",
+          "2xl": "400px",
+        }}
+        maxH={{
+          lg: "50px",
+          xl: "80px",
+          "2xl": "100px",
+        }}
+      >
         <Flex alignItems="center">
-          <Img h="80px" src={img} alt="description" />
+          <Img
+            h={{
+              lg: "40px",
+              xl: "60px",
+              "2xl": "80px",
+            }}
+            src={img}
+            alt="description"
+          />
           <Text
             ml="24px"
             letterSpacing="0.8px"
@@ -39,7 +64,11 @@ const CardProducts = ({ img, description, name, status }: Props) => {
             whiteSpace="nowrap"
             overflow="hidden"
             textOverflow="ellipsis"
-            fontSize="20px"
+            fontSize={{
+              lg: "12px",
+              xl: "14px",
+              "2xl": "20px",
+            }}
           >
             {description}
           </Text>
@@ -48,20 +77,39 @@ const CardProducts = ({ img, description, name, status }: Props) => {
       <Td border="none"></Td>
       <Td
         color="black.400"
-        fontSize="20px"
+        fontSize={{
+          lg: "12px",
+          xl: "14px",
+          "2xl": "20px",
+        }}
         fontFamily="Ubuntu"
         letterSpacing="0.8px"
         paddingY="30px"
-        minW="500px"
+        minW={{
+          lg: "200px",
+          xl: "270px",
+          "2xl": "400px",
+        }}
       >
         {name}
       </Td>
-      <Td paddingY="30px" minW="400px">
+      <Td
+        paddingY="30px"
+        minW={{
+          lg: "200px",
+          xl: "300px",
+          "2xl": "300px",
+        }}
+      >
         <HStack
           spacing="7px"
           alignItems="flex-start"
           display="flex"
-          maxW="300px"
+          maxW={{
+            lg: "200px",
+            xl: "300px",
+            "2xl": "300px",
+          }}
           flexWrap="wrap"
         >
           {dataTags.map(({ text }) => (
@@ -71,7 +119,11 @@ const CardProducts = ({ img, description, name, status }: Props) => {
       </Td>
       <Td
         color="black.400"
-        fontSize="20px"
+        fontSize={{
+          lg: "12px",
+          xl: "14px",
+          "2xl": "20px",
+        }}
         fontFamily="Ubuntu"
         letterSpacing="0.8px"
         paddingY="30px"

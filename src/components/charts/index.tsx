@@ -2,10 +2,12 @@ import { Box } from "@chakra-ui/react";
 import { memo } from "react";
 import ReactApexChart from "react-apexcharts";
 import SelectStart from "./select";
+import SkeletonOfChart from "../skeletonOfChart";
+import { ApexOptions } from "apexcharts";
 import "./styles.css";
 interface Props {
   data: {
-    options?: object;
+    options?: object | ApexOptions | any;
     series?: ApexAxisChartSeries;
     type?: string;
     height?: number | string;
@@ -13,12 +15,14 @@ interface Props {
   };
   showSelect?: boolean;
   stylize?: boolean;
+  loading?: boolean;
 }
 
 const Chart: React.FC<Props> = ({
   data,
   showSelect = true,
   stylize = false,
+  loading = false,
 }: Props) => {
   const {
     options,
@@ -27,11 +31,22 @@ const Chart: React.FC<Props> = ({
     height = "400px",
     width = "608px",
   } = data;
+  const isHorizontal = options?.plotOptions?.bar?.horizontal as boolean;
+
+  if (loading) {
+    return (
+      <SkeletonOfChart
+        type={type}
+        quantity={isHorizontal ? 7 : 10}
+        horizontal={isHorizontal}
+      />
+    );
+  }
 
   return (
     <Box position="relative" fontFamily="Ubuntu">
       <ReactApexChart
-        type={type as any}
+        type={type as string | any}
         options={options}
         series={series}
         height={height}

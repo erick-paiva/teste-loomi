@@ -24,6 +24,7 @@ interface ISeries {
 }
 
 export const ProfitExpectation = ({ endpoints }: Props) => {
+  const [loading, setLoading] = useState(true);
   const mockSeries = [
     {
       name: "Real",
@@ -82,6 +83,9 @@ export const ProfitExpectation = ({ endpoints }: Props) => {
             type: "line",
           },
         ]);
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
       });
     });
   }, []);
@@ -305,5 +309,5 @@ export const ProfitExpectation = ({ endpoints }: Props) => {
     series: series,
   };
 
-  return <Charts data={options} />;
+  return <Charts data={options} loading={loading} />;
 };

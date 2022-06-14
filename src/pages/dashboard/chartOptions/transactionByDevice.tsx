@@ -8,7 +8,11 @@ interface IDonutChartProps {
   w: object | any;
 }
 
-export const TransactionByDevice = () => {
+interface Props {
+  loading?: boolean;
+}
+
+export const TransactionByDevice = ({ loading = true }: Props) => {
   const customTooltip = ({ seriesIndex, w }: IDonutChartProps) => {
     const series = w.config.series;
     const transaction: number | string =
@@ -105,5 +109,12 @@ export const TransactionByDevice = () => {
     series: [2861, 1600],
   };
 
-  return <Charts data={options} showSelect={false} stylize={true} />;
+  return (
+    <Charts
+      data={options}
+      showSelect={false}
+      stylize={true}
+      loading={loading}
+    />
+  );
 };

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Charts from "../../../components/charts";
 import "./chartStyles/categories.styles.css";
 
@@ -9,6 +10,7 @@ interface IDonutChartProps {
 }
 
 export const CategoriesOrders = (): any => {
+  const [loading, setLoading] = useState(true);
   const customTooltip = ({ seriesIndex, w }: IDonutChartProps) => {
     const series = w.config.series;
     const value: number | string = (+series[seriesIndex])
@@ -30,6 +32,12 @@ export const CategoriesOrders = (): any => {
     </div>
         `;
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, [])
 
   const options: object = {
     type: "donut",
@@ -96,5 +104,5 @@ export const CategoriesOrders = (): any => {
     series: [44, 35, 22, 80, 15],
   };
 
-  return <Charts data={options} showSelect={false} stylize={true} />;
+  return <Charts data={options} showSelect={false} stylize={true} loading={loading} />;
 };

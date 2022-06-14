@@ -12,6 +12,7 @@ interface IResponse {
 }
 
 export const OrderPerMonth = ({ endpoint }: Props) => {
+  const [loading, setLoading] = useState(true);
   const [series, setSeries] = useState([
     {
       name: "pedidos",
@@ -28,6 +29,9 @@ export const OrderPerMonth = ({ endpoint }: Props) => {
           data: values.map((item) => item.value),
         },
       ]);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     });
   }, []);
 
@@ -118,5 +122,5 @@ export const OrderPerMonth = ({ endpoint }: Props) => {
     series: series,
   };
 
-  return <Charts data={options} />;
+  return <Charts data={options} loading={loading} />;
 };

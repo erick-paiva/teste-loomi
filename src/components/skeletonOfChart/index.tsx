@@ -65,6 +65,7 @@ const SkeletonOfChart = ({
           h={horizontal ? "80%" : "100px"}
           w="50%"
           transform={horizontal ? "rotate(90deg)" : "rotate(0deg)"}
+          justifyContent="center"
         >
           {col.map((_, index) => (
             <Flex key={index} flexDirection="column">

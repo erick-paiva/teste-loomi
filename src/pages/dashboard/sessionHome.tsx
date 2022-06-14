@@ -15,6 +15,7 @@ interface IResponseAlerts {
   type: string;
   value: number;
   since: string;
+  growth: number;
 }
 
 const SessionHome = () => {
@@ -24,35 +25,44 @@ const SessionHome = () => {
     tagText: "0 %",
     text: "",
   };
-  const getData = async (
+  const getData = (
     endPoint: string,
     title: string,
     warning: string,
+    callback?: (data: any) => void,
     type = "info"
   ) => {
-    const response = await api
+    const response = api
       .get(endPoint)
       .then((res) => {
-        return {
-          title: title,
-          tagText:
-            res.data.growth >= 0
-              ? `+ ${res.data.growth} %`
-              : `- ${res.data.growth * -1} %`,
-          warning: warning,
-          text:
-            type == "info"
-              ? res.data.value.toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                })
-              : `${res.data.value} produtos`,
-        };
+        const response = serializeData(title, warning, type, res.data);
+        if (callback) callback(response);
       })
       .catch(() => {
         return mock;
       });
     return response;
+  };
+
+  const serializeData = (
+    title: string,
+    warning: string,
+    type = "info",
+    data: IResponseAlerts
+  ) => {
+    return {
+      title: title,
+      tagText:
+        data.growth >= 0 ? `+ ${data.growth} %` : `- ${data.growth * -1} %`,
+      warning: warning,
+      text:
+        type == "info"
+          ? data.value.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })
+          : `${data.value} produtos`,
+    };
   };
 
   const [tickeDay, setTickeDay] = useState(mock);
@@ -85,83 +95,49 @@ const SessionHome = () => {
   };
 
   useEffect(() => {
-    (async () => {
-      setTickeDay(
-        await getData(
-          "/avg-ticket-day",
-          "Ticket médio últimas 24h",
-          "em relação a ontem"
-        )
-      );
-    })();
-  }, []);
+    getData(
+      "/avg-ticket-day",
+      "Ticket médio últimas 24h",
+      "em relação a ontem",
+      setTickeDay
+    );
 
-  useEffect(() => {
-    (async () => {
-      setTickeDay(
-        await getData(
-          "/avg-ticket-day",
-          "Ticket médio últimas 24h",
-          "em relação a ontem"
-        )
-      );
-    })();
-  }, []);
+    getData(
+      "/avg-ticket-month",
+      "Ticket médio mensal",
+      "em relação a julho",
+      setTickeMonth
+    );
 
-  useEffect(() => {
-    (async () => {
-      setTickeMonth(
-        await getData(
-          "/avg-ticket-month",
-          "Ticket médio mensal",
-          "em relação a julho"
-        )
+    api.get("/alerts").then((res) => {
+      setAlerts(
+        res.data.map((ele: IResponseAlerts, index: number) => {
+          return {
+            title: ele.type,
+            warning: alerts[index].warning,
+            tagText: `há ${scavengePastDays(ele.since)} dias`,
+            text: `${ele.value} produtos`,
+            type: "info",
+          };
+        })
       );
-    })();
-  }, []);
+    });
 
-  useEffect(() => {
-    (async () => {
-      api.get("/alerts").then((res) => {
-        setAlerts(
-          res.data.map((ele: IResponseAlerts, index: number) => {
-            return {
-              title: ele.type,
-              warning: alerts[index].warning,
-              tagText: `há ${scavengePastDays(ele.since)} dias`,
-              text: `${ele.value} produtos`,
-              type: "info",
-            };
-          })
-        );
-      });
-    })();
-  }, []);
+    getData(
+      "/orders-month",
+      "Pedidos realizados no mês",
+      "em relação a julho",
+      setOrdersMonth,
+      "infoProd"
+    );
 
-  useEffect(() => {
-    (async () => {
-      setOrdersMonth(
-        await getData(
-          "/orders-month",
-          "Pedidos realizados no mês",
-          "em relação a julho",
-          "infoProd"
-        )
-      );
-    })();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      setSellsMonth(
-        await getData(
-          "/sells-month",
-          "Produtos vendidos no mês",
-          "em relação a julho",
-          "infoProd"
-        )
-      );
-    })();
+    getData(
+      "/sells-month",
+      "Produtos vendidos no mês",
+      "em relação a julho",
+      setSellsMonth,
+      "infoProd"
+    );
   }, []);
 
   return (

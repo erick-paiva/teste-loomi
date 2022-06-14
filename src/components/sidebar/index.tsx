@@ -25,8 +25,6 @@ const Sidebar = () => {
     "(max-width: 1440px)"
   );
 
-  console.log(isLargerThan1000);
-
   const animation = keyframes`
   from {opacity: 0; transform: translateX(-30px); z-index: -1;}
   to {opacity: 1;}

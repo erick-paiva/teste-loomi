@@ -15,6 +15,7 @@ interface ISeries {
 }
 
 export const OrdersMade = ({ endpoints }: Props) => {
+  const [loading, setLoading] = useState(true);
   const mockSeries = [
     {
       name: "Pedidos realizados",
@@ -50,6 +51,9 @@ export const OrdersMade = ({ endpoints }: Props) => {
           },
         ]);
       });
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     });
   }, []);
 
@@ -165,5 +169,5 @@ export const OrdersMade = ({ endpoints }: Props) => {
     series: series,
   };
 
-  return <Charts data={options} />;
+  return <Charts data={options} loading={loading} />;
 };

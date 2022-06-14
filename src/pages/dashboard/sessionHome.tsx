@@ -56,7 +56,7 @@ const SessionHome = () => {
         data.growth >= 0 ? `+ ${data.growth} %` : `- ${data.growth * -1} %`,
       warning: warning,
       text:
-        type == "info"
+        type === "info"
           ? data.value.toLocaleString("pt-BR", {
               style: "currency",
               currency: "BRL",

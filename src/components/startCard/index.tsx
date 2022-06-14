@@ -1,5 +1,4 @@
 import { Center, Flex, Tag, TagLabel, Text } from "@chakra-ui/react";
-import { useState } from "react";
 import SkeletonOfStartCard from "../skeletonOfStartCard";
 interface IStartCardProps {
   information: {

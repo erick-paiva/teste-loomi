@@ -34,7 +34,7 @@ const FunnelSession = () => {
       tagText: growth >= 0 ? `+ ${growth} %` : `- ${+growth * -1} %`,
       warning: warning,
       text:
-        type == "info"
+        type === "info"
           ? value.toLocaleString("pt-BR", {
               style: "currency",
               currency: "BRL",

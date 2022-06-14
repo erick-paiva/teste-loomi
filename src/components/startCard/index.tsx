@@ -1,4 +1,6 @@
 import { Center, Flex, Tag, TagLabel, Text } from "@chakra-ui/react";
+import { useState } from "react";
+import SkeletonOfStartCard from "../skeletonOfStartCard";
 interface IStartCardProps {
   information: {
     title: string;
@@ -7,9 +9,10 @@ interface IStartCardProps {
     text: string;
     type?: string;
   };
+  loading?: boolean;
 }
 
-const StartCard = ({ information }: IStartCardProps) => {
+const StartCard = ({ information, loading = true }: IStartCardProps) => {
   const { title, warning, tagText, text, type = "information" } = information;
   const textSplit = text.includes("R$")
     ? ["R$", text.slice(3, text.length)]
@@ -17,6 +20,10 @@ const StartCard = ({ information }: IStartCardProps) => {
   const isLetter = /\D/g;
 
   const isNumber = !isLetter.test(textSplit[0]) && isLetter.test(textSplit[1]);
+
+  if (loading) {
+    return <SkeletonOfStartCard />;
+  }
 
   return (
     <Center
@@ -73,10 +80,10 @@ const StartCard = ({ information }: IStartCardProps) => {
           >
             {warning}
           </Text>
-        ):
+        ) : (
           <Text marginY="15px" />
-        }
-        
+        )}
+
         {!isNumber ? (
           <Text
             mt="18px"

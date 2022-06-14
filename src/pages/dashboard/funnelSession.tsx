@@ -21,6 +21,7 @@ interface IMockData {
 }
 
 const FunnelSession = () => {
+  const [loading, setLoading] = useState(true);
   const serializeDate = (
     title: string,
     warning: string,
@@ -117,6 +118,9 @@ const FunnelSession = () => {
         );
       });
       setMockData(newData as IMockData | any);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     });
   }, []);
 
@@ -124,7 +128,7 @@ const FunnelSession = () => {
     <HStack overflowX="auto" css={scrollBarStyle} spacing="32px" minH="200px">
       {Object.values(mockData).map((data, index) => (
         <Box minW="230px" key={index}>
-          <StartCard information={data} />
+          <StartCard information={data} loading={loading} />
         </Box>
       ))}
     </HStack>

@@ -73,7 +73,7 @@ const SessionHome = () => {
   ]);
   const [ordersMonth, setOrdersMonth] = useState(mock);
   const [sellsMonth, setSellsMonth] = useState(mock);
-
+  const [loading, setLoading] = useState(true);
   const scavengePastDays = (date: string) => {
     const pastDate = new Date(date);
     const pastDays = new Date().getTime() - pastDate.getTime();
@@ -140,18 +140,25 @@ const SessionHome = () => {
     );
   }, []);
 
+  useEffect(() => {
+    if (tickeDay && tickeMonth && alerts && ordersMonth && sellsMonth)
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+  }, [tickeDay, tickeMonth, alerts, ordersMonth, sellsMonth]);
+
   return (
     <HStack overflowX="auto" css={scrollBarStyle} spacing="32px" minH="200px">
-      <StartCard information={tickeDay} />
+      <StartCard information={tickeDay} loading={loading} />
 
-      <StartCard information={tickeMonth} />
+      <StartCard information={tickeMonth} loading={loading} />
       {alerts.map((alert, index) => (
-        <StartCard information={alert} key={index} />
+        <StartCard information={alert} key={index} loading={loading} />
       ))}
 
-      <StartCard information={ordersMonth} />
+      <StartCard information={ordersMonth} loading={loading} />
 
-      <StartCard information={sellsMonth} />
+      <StartCard information={sellsMonth} loading={loading} />
     </HStack>
   );
 };

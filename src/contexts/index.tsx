@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { AuthProvider } from "./AuthContext";
+import { ProductProvider } from "./ProductsContext";
 
 interface AppProviderProps {
   children: ReactNode;
@@ -7,6 +8,6 @@ interface AppProviderProps {
 
 export const AppProvider = ({ children }: AppProviderProps) => (
   <AuthProvider>
-    {children}
+    <ProductProvider>{children}</ProductProvider>
   </AuthProvider>
 );

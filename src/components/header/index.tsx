@@ -34,6 +34,7 @@ export const Header = ({ userName, userAvatar }: HeaderProps) => {
             color="gray.600 opacity:1"
             fontSize={["22px", "26px"]}
             opacity="0.55"
+            cursor="pointer"
           />
         </PopoverChakra>
       </Flex>

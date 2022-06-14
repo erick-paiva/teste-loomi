@@ -27,6 +27,7 @@ const PopoverChakra = ({ children }: Props) => {
             h="50px"
             paddingX="10px"
             onClick={signOut}
+            cursor="pointer"
           >
             <Heading as="h4" fontSize="17px">
               Sair da conta

@@ -61,5 +61,10 @@ export const theme = extendTheme({
         },
       },
     },
+    breakpoints: {
+      lg: "1000px",
+      xl: "1366px",
+      "2xl": "1440px",
+    },
   },
 });

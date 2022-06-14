@@ -1,4 +1,5 @@
 import {
+  Box,
   Center,
   Divider,
   Flex,
@@ -23,6 +24,18 @@ import SkeletonCardProducts from "../../components/skeletonCardProducts";
 const ProductsTable = () => {
   const [search, setSearch] = useState("");
   const [foundProducts, setFoundProducts] = useState<IProduct[]>([]);
+  const heithTh = {
+    lg: "20px",
+    xl: "30px",
+    "2xl": "50px",
+  };
+
+  const fontSizeTh = {
+    lg: "16px",
+    xl: "17px",
+    "2xl": "18px",
+  };
+
   const {
     currentPage,
     currentPageNum,
@@ -30,18 +43,16 @@ const ProductsTable = () => {
     advancePage,
     backPage,
     totalPages,
-    loading
+    loading,
   } = useProduct();
 
   const theadThStyles = {
-    fontSize: "16px",
     fontWeight: "500",
     fontFamily: "Ubuntu",
     color: "white",
     textTransform: "uppercase",
     letterSpacing: "0.64px",
     backgroundColor: "gray.600",
-    height: "50px",
   };
 
   const scrollBarStyle = {
@@ -74,7 +85,11 @@ const ProductsTable = () => {
 
   return (
     <Flex
-      minH="1182px"
+      minH={{
+        lg: "700px",
+        xl: "800px",
+        "2xl": "1182px",
+      }}
       minW="70%"
       bg="white"
       fontFamily="Ubuntu"
@@ -89,6 +104,11 @@ const ProductsTable = () => {
           as="h2"
           color="black.400"
           letterSpacing="0.6px"
+          fontSize={{
+            lg: "20px",
+            xl: "25px",
+            "2xl": "30px",
+          }}
         >
           Listagem de produtos
         </Heading>
@@ -97,23 +117,60 @@ const ProductsTable = () => {
           <InputChakra
             name="search"
             placeholder="Pesquisar produtos"
-            Icon={<BiSearch color="#989899" size="25px" />}
+            fontSize={{
+              lg: "15px",
+              xl: "18px",
+              "2xl": "25px",
+            }}
+            Icon={
+              <Box
+                fontSize={{
+                  lg: "15px",
+                  xl: "18px",
+                  "2xl": "25px",
+                }}
+              >
+                <BiSearch color="#989899" />
+              </Box>
+            }
             fontFamily="Ubuntu"
             _placeholder={{ color: "black.400", opacity: 0.4 }}
             paddingLeft="40px"
             onChange={(e) => setSearch(e.target.value)}
+            h={{
+              lg: "30px",
+              xl: "40px",
+              "2xl": "60px",
+            }}
           />
         </Flex>
       </Center>
-      <TableContainer mt="50px" minH="800px" mb="40px" sx={scrollBarStyle}>
+      <TableContainer
+        mt="50px"
+        minH={{
+          lg: "400px",
+          xl: "600px",
+          "2xl": "800px",
+        }}
+        mb={{
+          lg: "15px",
+          xl: "25px",
+          "2xl": "40px",
+        }}
+        sx={scrollBarStyle}
+      >
         <Table>
           <Thead>
             <Tr>
-              <Th sx={theadThStyles} w="546px" borderRadius="9px">
+              <Th sx={theadThStyles} borderRadius="9px" fontSize={fontSizeTh}>
                 PRODUTO
               </Th>
               <Th w="40px" border="none"></Th>
-              <Th borderRadius="9px 0 0 9px" sx={theadThStyles}>
+              <Th
+                borderRadius="9px 0 0 9px"
+                sx={theadThStyles}
+                fontSize={fontSizeTh}
+              >
                 <Flex
                   display="flex"
                   justifyContent="space-between"
@@ -124,26 +181,30 @@ const ProductsTable = () => {
                 </Flex>
               </Th>
 
-              <Th sx={theadThStyles} w="33%">
+              <Th sx={theadThStyles} w="33%" fontSize={fontSizeTh}>
                 <Flex
                   display="flex"
                   justifyContent="space-between"
                   alignItems="center"
                 >
                   ESPECIFICAÇÕES
-                  <Divider bg="white" h="25px" orientation="vertical" />
+                  <Divider bg="white" h={heithTh} orientation="vertical" />
                 </Flex>
               </Th>
-              <Th sx={theadThStyles} borderRadius="0 9px 9px 0">
+              <Th
+                sx={theadThStyles}
+                borderRadius="0 9px 9px 0"
+                fontSize={fontSizeTh}
+              >
                 STATUS
               </Th>
             </Tr>
           </Thead>
           <Tbody>
-
             {loading && <SkeletonCardProducts />}
 
-            {foundProducts.length > 0 && !loading &&
+            {foundProducts.length > 0 &&
+              !loading &&
               foundProducts.map(({ id, name, description, status }) => (
                 <CardProducts
                   key={id}
@@ -154,7 +215,8 @@ const ProductsTable = () => {
                 />
               ))}
 
-            {!foundProducts.length && !loading &&
+            {!foundProducts.length &&
+              !loading &&
               currentPage.map(({ id, name, description, status }) => (
                 <CardProducts
                   key={id}

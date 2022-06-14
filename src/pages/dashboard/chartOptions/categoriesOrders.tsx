@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Charts from "../../../components/charts";
 import "./chartStyles/categories.styles.css";
@@ -11,6 +12,12 @@ interface IDonutChartProps {
 
 export const CategoriesOrders = (): any => {
   const [loading, setLoading] = useState(true);
+  const [offsetYLegend, setOffsetYLegend] = useState(145);
+
+  const [isLargerThan1000] = useMediaQuery("(min-width: 1000px)");
+
+  const [isLargerThan1440] = useMediaQuery("(min-width: 1440px)");
+
   const customTooltip = ({ seriesIndex, w }: IDonutChartProps) => {
     const series = w.config.series;
     const value: number | string = (+series[seriesIndex])
@@ -32,6 +39,14 @@ export const CategoriesOrders = (): any => {
     </div>
         `;
   };
+
+  useEffect(() => {
+    if (isLargerThan1440) {
+      setOffsetYLegend(120)
+    }else if (isLargerThan1000) {
+      setOffsetYLegend(100)
+    }
+  }, [isLargerThan1000, isLargerThan1440]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -86,7 +101,7 @@ export const CategoriesOrders = (): any => {
         followCursor: true,
       },
       legend: {
-        offsetY: 145,
+        offsetY: offsetYLegend,
         offsetX: 10,
         fontSize: "16px",
         labels: {

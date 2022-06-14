@@ -1,5 +1,6 @@
 import { Avatar, Flex, Img, Text } from "@chakra-ui/react";
 import LogoLoomi from "../../assets/imagesPage/logoLoomi.svg";
+import PopoverChakra from "./popoverChakra";
 
 interface HeaderProps {
   userName: string;
@@ -23,16 +24,18 @@ export const Header = ({ userName, userAvatar }: HeaderProps) => {
 
       <Flex alignItems="center">
         <Text textTransform="capitalize">{userName}</Text>
-        <Avatar
-          ml="10px"
-          textTransform="uppercase"
-          name={userName}
-          {...(userAvatar && { src: userAvatar })}
-          bg="purple.500"
-          color="gray.600 opacity:1"
-          fontSize={["22px", "26px"]}
-          opacity="0.55"
-        />
+        <PopoverChakra>
+          <Avatar
+            ml="10px"
+            textTransform="uppercase"
+            name={userName}
+            {...(userAvatar && { src: userAvatar })}
+            bg="purple.500"
+            color="gray.600 opacity:1"
+            fontSize={["22px", "26px"]}
+            opacity="0.55"
+          />
+        </PopoverChakra>
       </Flex>
     </Flex>
   );

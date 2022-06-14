@@ -39,7 +39,7 @@ const Chart: React.FC<Props> = ({
 
   const [isLargerThan1000] = useMediaQuery("(max-width: 1000px)");
 
-  const [isLargerThan1440] = useMediaQuery("(min-width: 1440px)");
+  const [isLargerThan1440] = useMediaQuery("(max-width: 1440px)");
 
   useEffect(() => {
     if (isLargerThan1000) {

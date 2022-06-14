@@ -85,8 +85,8 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           }}
           fontSize="20px"
           h={{
-            lg: "50px",
-            xl: "55px",
+            lg: "35px",
+            xl: "45px",
             "2xl": "60px",
           }}
           borderRadius="8px"
@@ -101,8 +101,8 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
             alignItems="center"
             justifyContent="center"
             h={{
-              lg: "50px",
-              xl: "55px",
+              lg: "35px",
+              xl: "45px",
               "2xl": "60px",
             }}
             mr="12px"

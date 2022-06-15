@@ -64,7 +64,7 @@ export const OrdersMade = ({ endpoints }: Props) => {
   const options = {
     type: "bar",
     height: "400px",
-    width: "608px",
+    width: "708px",
     options: {
       chart: {
         type: "bar",

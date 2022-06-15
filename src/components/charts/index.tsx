@@ -63,8 +63,8 @@ const Chart: React.FC<Props> = ({
         type={type as string | any}
         options={options}
         series={series}
-        height={newHeight + "px"}
-        width={newWidth + "px"}
+        height={newHeight}
+        width={newWidth}
         {...(stylize && { id: "chart" })}
       />
       {showSelect && (
